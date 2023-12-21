@@ -1,0 +1,20 @@
+<?php
+namespace App\Http\Controllers;
+
+class RedirectController extends Controller
+{
+    public function register()
+    {
+        return view('register');
+    }
+
+    public function login()
+    {
+        return view('login');
+    }
+
+    public function index()
+    {
+        return view('index');
+    }
+}
