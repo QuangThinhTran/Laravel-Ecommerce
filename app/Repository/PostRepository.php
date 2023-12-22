@@ -1,28 +1,34 @@
 <?php
 namespace App\Repository;
 
+use App\Models\Post;
 use App\Repository\Interface\IPostRepository;
 
 class PostRepository implements IPostRepository
 {
+    public function index()
+    {
+        return Post::all();
+    }
+
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        return Post::create($data);
     }
     public function detail($id)
     {
-        // TODO: Implement detail() method.
+        return Post::find($id);
     }
     public function update($id, array $data)
     {
-        // TODO: Implement update() method.
+        return Post::find($id)->update($data);
     }
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return Post::find($id)->delete();
     }
     public function restore($id)
     {
-        // TODO: Implement restore() method.
+        return Post::find($id)->withTrashed()->restore();
     }
 }

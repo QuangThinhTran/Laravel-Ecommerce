@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\CMS\PostController;
+use App\Http\Controllers\Index\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,3 +21,16 @@ Route::prefix('view')->group(function () {
     Route::get('index', [RedirectController::class, 'index'])->name('redirect.index');
 });
 
+Route::prefix('auth')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+});
+
+Route::get('', [HomeController::class, 'index'])->name('home.index');
+
+Route::prefix('post')->group(function () {
+    Route::post('create', [PostController::class, ''])->name('auth.register');
+    Route::get('detail/{id}', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('delete/{id}', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('restore/{id}', [AuthController::class, 'login'])->name('auth.login');
+});

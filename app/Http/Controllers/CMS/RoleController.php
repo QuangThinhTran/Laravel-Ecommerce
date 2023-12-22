@@ -24,7 +24,7 @@ class RoleController extends Controller
             $input = $request->all();
 
             $role = $this->roleRepository->create($input);
-            dd($role);
+
             return response()->json([
                 'status_code' => $role,
             ], ResponseAlias::HTTP_CREATED);

@@ -6,8 +6,8 @@
             <form class="form mt-5" action="" method="post">
                 <h3 class="text-center text-dark">Login</h3>
                 <div class="form-group">
-                    <label for="email" class="text-dark">Email:</label><br>
-                    <input type="email" name="email" id="email" class="form-control">
+                    <label for="username" class="text-dark">Username :</label><br>
+                    <input type="text" name="username" id="email" class="form-control">
                 </div>
                 <div class="form-group mt-3">
                     <label for="password" class="text-dark">Password:</label><br>

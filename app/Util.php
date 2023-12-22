@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -17,6 +18,15 @@ trait Util
 
     public function uploadImage(Request $request)
     {
-
+        if ($request->file()) {
+            return false;
+        }
+        $images = $request->file();
+        foreach ($images as $img) {
+            Images::insert([
+                'path' => $img,
+                'post_id' => $request->post_id
+            ]);
+        }
     }
 }

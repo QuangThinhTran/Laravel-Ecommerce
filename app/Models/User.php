@@ -35,4 +35,31 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'user_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($user) {
+            $user->posts()->delete();
+        });
+
+        static::restoring(function ($user) {
+            $user->posts()->onlyTrashed()->restore();
+        });
+    }
+
+    public function scopeSearch($query)
+    {
+        if (request('key'))
+        {
+            $key = request('key');
+            $query = $query->where('name', 'like', '%' . $key . '%');
+        }
+        return $query;
+    }
 }
