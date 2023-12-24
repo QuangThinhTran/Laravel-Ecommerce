@@ -25,9 +25,7 @@ class HomeController extends Controller
     {
         try {
             $posts = $this->postRepository->index();
-
             $users = $this->userRepository->index();
-
             return view('index', compact('posts', 'users'));
         } catch (\Exception $e) {
             return response()->json([

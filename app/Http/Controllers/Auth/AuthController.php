@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repository\Interface\IUserRepository;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -23,7 +21,7 @@ class AuthController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request)
     {
         try {
             $input = $request->all();
@@ -31,19 +29,12 @@ class AuthController extends Controller
             $user = $this->userRepository->register($input);
 
             if (is_null($user)) {
-                return response()->json([
-                    'message' => 'Register failed',
-                ], ResponseAlias::HTTP_OK);
+                return back()->with('errors', 'Register Failed');
             }
 
-            $access_token = $user->createToken('Bearer')->plainTextToken;
+            $this->userRepository->login($input);
 
-            return response()->json([
-                'user' => $user,
-                'access_token' => $access_token,
-                'token_type' => 'Bearer',
-                'status_code' => ResponseAlias::HTTP_OK
-            ],ResponseAlias::HTTP_CREATED);
+            return redirect()->route('home.index', compact('user'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,
@@ -52,31 +43,30 @@ class AuthController extends Controller
         }
     }
 
-    public function login(LoginRequest $request): JsonResponse
+    public function login(LoginRequest $request)
     {
         try {
             $input = $request->all();
 
             $user = $this->userRepository->login($input);
             if (!$user) {
-                return response()->json([
-                    'message' => 'Login failed',
-                ], ResponseAlias::HTTP_OK);
+                return back()->with('failed', 'Login Failed');
             }
 
-            $access_token = $user->createToken('Bearer')->plainTextToken;
+//            $access_token = $user->createToken('Bearer')->plainTextToken;
 
-            return response()->json([
-                'user' => $user,
-                'access_token' => $access_token,
-                'token_type' => 'Bearer',
-                'status_code' => ResponseAlias::HTTP_OK
-            ]);
+            return redirect()->route('home.index', compact('user'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,
                 'message' => $e->getMessage(),
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('home.index');
     }
 }

@@ -22,15 +22,16 @@ class Post extends Model
         'user_id',
     ];
 
-    protected $dateFormat = [
-        'created_at' => 'd-m-Y',
-        'updated_at' => 'd-m-Y',
-        'deleted_at' => 'd-m-Y'
-    ];
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     public function images()

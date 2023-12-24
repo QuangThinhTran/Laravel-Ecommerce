@@ -20,12 +20,9 @@ class Handler extends ExceptionHandler
             ], 404);
         });
 
-        $this->renderable(function (ValidationException $e) {
-            return response()->json([
-                'status' => Response::HTTP_BAD_REQUEST,
-                'message' => $e->errors()
-            ], 400);
-        });
+//        $this->renderable(function (ValidationException $e) {
+//            return back()->with('errors', '12');
+//        });
 
         $this->renderable(function (ModelNotFoundException $e) {
             return response()->json([

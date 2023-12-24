@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @method static create(array $array)
+ * @method static find($id)
  */
 class User extends Authenticatable
 {
@@ -38,7 +39,12 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany(Post::class, 'user_id');
+        return $this->hasMany(Post::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'user_id');
     }
 
     protected static function boot()

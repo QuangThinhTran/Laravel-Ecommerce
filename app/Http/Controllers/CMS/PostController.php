@@ -24,16 +24,12 @@ class PostController extends Controller
 
     public function create(Request $request)
     {
-        DB::beginTransaction();
         try {
             $input = $request->all();
 
-            $post = $this->postRepository->create($input);
+            $this->postRepository->create($input);
 
-            DB::commit();
-            return response()->json([
-                'data' => $post
-            ]);
+            return redirect()->route('home.index')->with('success', 'Idea created Successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([

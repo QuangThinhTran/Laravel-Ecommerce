@@ -8,7 +8,7 @@ class PostRepository implements IPostRepository
 {
     public function index()
     {
-        return Post::all();
+        return Post::with('user', 'comments.user')->paginate(5);
     }
 
     public function create(array $data)
