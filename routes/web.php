@@ -8,6 +8,9 @@ use App\Http\Controllers\Index\HomeController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\CommentController;
 use App\Http\Controllers\CMS\SearchController;
+use App\Http\Controllers\Index\DashboardController;
+use App\Http\Controllers\CMS\FollowController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +24,8 @@ use App\Http\Controllers\CMS\SearchController;
 Route::prefix('view')->group(function () {
     Route::get('register', [RedirectController::class, 'register'])->name('redirect.register');
     Route::get('login', [RedirectController::class, 'login'])->name('redirect.login');
+
+    Route::get('not-found', [RedirectController::class, 'notFound'])->name('not.found');
 });
 
 Route::prefix('auth')->group(function () {
@@ -29,21 +34,30 @@ Route::prefix('auth')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
-Route::get('', [HomeController::class, 'index'])->name('home.index');
-
-Route::prefix('user')->group(function (){
+Route::prefix('user')->group(function () {
     Route::get('/detail/{id}', [UserController::class, 'detail'])->name('user.detail');
 });
 
-Route::post('/comment', [CommentController::class, 'addComment'])->name('comment.add');
-
 Route::prefix('post')->group(function () {
     Route::post('create', [PostController::class, 'create'])->name('post.create');
-    Route::get('detail/{id}', [AuthController::class, 'login'])->name('post.detail');
-    Route::post('delete/{id}', [AuthController::class, 'login'])->name('post.delete');
-    Route::post('restore/{id}', [AuthController::class, 'login'])->name('post.restore');
+    Route::get('delete', [PostController::class, 'delete'])->name('post.delete');
 });
 
 Route::prefix('search')->group(function () {
     Route::get('/user', [SearchController::class, 'searchUserByName'])->name('search.user');
 });
+
+Route::prefix('search')->group(function () {
+    Route::get('/user', [SearchController::class, 'searchUserByName'])->name('search.user');
+});
+
+Route::get('follow/{user}', [FollowController::class, 'follow'])->name('follow');
+Route::get('unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
+
+Route::middleware('admin')->prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+});
+
+
+Route::get('', [HomeController::class, 'index'])->name('home.index');
+Route::post('/comment', [CommentController::class, 'addComment'])->name('comment.add');

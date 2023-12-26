@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository implements IUserRepository
 {
     public function index(){
-        return User::inRandomOrder()->limit(3)->get();
+        return User::limit(3)->get();
     }
     public function login(array $data): bool|array
     {

@@ -34,20 +34,8 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function images()
-    {
-        return $this->hasMany(Images::class, 'post_id');
-    }
-
     protected static function boot()
     {
         parent::boot();
-        static::deleting(function ($posts){
-            $posts->images()->delete();
-        });
-
-        static::restoring(function ($posts){
-            $posts->images()->onlyTrashed()->restore();
-        });
     }
 }

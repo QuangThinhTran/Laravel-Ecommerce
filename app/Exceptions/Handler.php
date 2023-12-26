@@ -14,10 +14,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         $this->renderable(function (NotFoundHttpException $e) {
-            return response()->json([
-                'status' => $e->getStatusCode(),
-                'message' => "Not found"
-            ], 404);
+            return redirect()->route('not.found');
         });
 
 //        $this->renderable(function (ValidationException $e) {

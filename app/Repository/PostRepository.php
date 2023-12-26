@@ -25,7 +25,7 @@ class PostRepository implements IPostRepository
     }
     public function delete($id)
     {
-        return Post::find($id)->delete();
+        return Post::findOrFail($id)->delete();
     }
     public function restore($id)
     {

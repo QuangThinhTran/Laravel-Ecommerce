@@ -29,14 +29,14 @@
                 @enderror
                 <div class="form-group mt-3">
                     <label for="password" class="text-dark">Password:</label><br>
-                    <input type="text" name="password" id="password" class="form-control">
+                    <input type="password" name="password" id="password" class="form-control">
                 </div>
                 @error('password')
                 <div style="color:red;">{{ $message }}</div><br>
                 @enderror
                 <div class="form-group mt-3">
                     <label for="confirm-password" class="text-dark">Confirm Password:</label><br>
-                    <input type="text" name="password_confirm" id="confirm-password" class="form-control">
+                    <input type="password" name="password_confirm" id="confirm-password" class="form-control">
                 </div>
                 @error('password_confirm')
                 <div style="color:red;">{{ $message }}</div><br>
@@ -48,7 +48,7 @@
 {{--                </div>--}}
                 <button type="submit">Register</button>
 {{--                @if(session('errors'))--}}
-{{--                    <p style="color:red">{{session('Error')}}</p>--}}
+{{--                    <p style="color:red">{{session('errors')}}</p>--}}
 {{--                @endif--}}
             </form>
             <div class="text-right mt-2">

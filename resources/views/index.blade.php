@@ -10,26 +10,6 @@
                                 <a class="nav-link text-dark" href="#">
                                     <span>Home</span></a>
                             </li>
-                            {{--                            <li class="nav-item">--}}
-                            {{--                                <a class="nav-link" href="#">--}}
-                            {{--                                    <span>Explore</span></a>--}}
-                            {{--                            </li>--}}
-                            {{--                            <li class="nav-item">--}}
-                            {{--                                <a class="nav-link" href="#">--}}
-                            {{--                                    <span>Feed</span></a>--}}
-                            {{--                            </li>--}}
-                            {{--                            <li class="nav-item">--}}
-                            {{--                                <a class="nav-link" href="#">--}}
-                            {{--                                    <span>Terms</span></a>--}}
-                            {{--                            </li>--}}
-                            {{--                            <li class="nav-item">--}}
-                            {{--                                <a class="nav-link" href="#">--}}
-                            {{--                                    <span>Support</span></a>--}}
-                            {{--                            </li>--}}
-                            {{--                            <li class="nav-item">--}}
-                            {{--                                <a class="nav-link" href="#">--}}
-                            {{--                                    <span>Settings</span></a>--}}
-                            {{--                            </li>--}}
                         </ul>
                     </div>
                     @if(Auth::check())
@@ -55,8 +35,10 @@
                             <div class="mb-3">
                                 <textarea class="form-control" id="idea" name="content" rows="3"></textarea>
                             </div>
-                            <input type="hidden" name="title" value="{{ Auth::user()->name }}">
                             <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                            @error('content')
+                            <div style="color:red;">{{ $message }}</div><br>
+                            @enderror
                             <div class="">
                                 <button class="btn btn-dark" type="submit"> Share</button>
                             </div>
@@ -95,10 +77,13 @@
                                         <form action="{{ route('comment.add') }}" method="post">
                                             @csrf
                                             <div class="mb-3">
-                                                <textarea class="fs-6 form-control" rows="1" name="content"></textarea>
+                                                <textarea class="fs-6 form-control" rows="1" name="title"></textarea>
                                             </div>
                                             <input type="hidden" name="user_id" value="{{Auth::id()}}">
                                             <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                            @error('title')
+                                            <div style="color:red;">{{ $message }}</div><br>
+                                            @enderror
                                             <div>
                                                 <button type="submit" class="btn btn-primary btn-sm"> Post Comment
                                                 </button>
@@ -118,7 +103,7 @@
                                                     <small class="fs-6 fw-light text-muted">{{ $comment->created_at }}</small>
                                                 </div>
                                                 <p class="fs-6 mt-3 fw-light">
-                                                    {{ $comment->content }}
+                                                    {{ $comment->title }}
                                                 </p>
                                             </div>
                                         </div>

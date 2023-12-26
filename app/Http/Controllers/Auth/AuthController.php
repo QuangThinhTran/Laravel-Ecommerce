@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Constant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
@@ -43,19 +44,23 @@ class AuthController extends Controller
         }
     }
 
+    //Demo middlware
     public function login(LoginRequest $request)
     {
         try {
             $input = $request->all();
 
             $user = $this->userRepository->login($input);
+
             if (!$user) {
                 return back()->with('failed', 'Login Failed');
             }
 
-//            $access_token = $user->createToken('Bearer')->plainTextToken;
-
+            if (Auth::user()['role_id'] == Constant::ROLE_ADMIN) {
+                return redirect()->route('dashboard.index');
+            }
             return redirect()->route('home.index', compact('user'));
+
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,

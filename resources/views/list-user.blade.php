@@ -28,8 +28,18 @@
                         <a class="h6 mb-0" href="{{ route('user.detail',['id' => $user->id]) }}">{{ $user->name }}</a>
                         <p class="mb-0 small text-truncate">{{ $user->email }}</p>
                     </div>
-{{--                    <a class="btn btn-primary-soft rounded-circle icon-md ms-auto" href=""><i--}}
-{{--                                class="fa-solid fa-plus"> </i></a>--}}
+                    <?php $data = $user->followers()->where('user_id', Auth::id())->get() ?>
+                    @if(Auth::check() && !$data->isEmpty()))
+                        <a href="{{ route('unfollow',['user' => $user]) }}"
+                           class="btn btn-primary-soft rounded-circle icon-md ms-auto"><i
+                                    class="fa-solid fa-check"> </i></a>
+                    @elseif($data->isEmpty()))
+                        <a href="{{ route('follow',['user' => $user]) }}"
+                           class="btn btn-primary-soft rounded-circle icon-md ms-auto"><i
+                                    class="fa-solid fa-plus"> </i></a>
+                    @else
+
+                    @endif
                 </div>
             @endforeach
             {{--                        <div class="d-grid mt-3">--}}

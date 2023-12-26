@@ -29,7 +29,7 @@
                 @endif
             </form>
             <div class="text-right mt-2">
-                <a href="{{ route('auth.register') }}" class="text-dark">Register here</a>
+                <a href="{{ route('redirect.register') }}" class="text-dark">Register here</a>
             </div>
         </div>
     </div>

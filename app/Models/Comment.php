@@ -11,7 +11,7 @@ class Comment extends Model
 
     protected $table = 'comments';
     protected $fillable = [
-      'content',
+      'title',
       'user_id',
       'post_id'
     ];
