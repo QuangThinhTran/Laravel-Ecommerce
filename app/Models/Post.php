@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @method static create(array $data)
  * @method static find($id)
+ * @method static findorFail($id)
  */
 class Post extends Model
 {
@@ -18,7 +19,6 @@ class Post extends Model
 
     protected $fillable = [
         'title',
-        'content',
         'user_id',
     ];
 
@@ -28,24 +28,34 @@ class Post extends Model
         'deleted_at' => 'd-m-Y'
     ];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function images()
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Images::class, 'post_id');
     }
 
-    protected static function boot()
+    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public function likes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'likes', 'post_id', 'user_id');
+    }
+
+    protected static function boot(): void
     {
         parent::boot();
-        static::deleting(function ($posts){
+        static::deleting(function ($posts) {
             $posts->images()->delete();
         });
 
-        static::restoring(function ($posts){
+        static::restoring(function ($posts) {
             $posts->images()->onlyTrashed()->restore();
         });
     }

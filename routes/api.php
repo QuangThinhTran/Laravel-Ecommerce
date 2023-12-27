@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\CMS\PostController;
+use App\Http\Controllers\Index\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +18,15 @@ use App\Http\Controllers\RedirectController;
 
 Route::middleware('auth:sanctum')->group(function () {
 
+});
+
+Route::prefix('auth')->group(function () {
+    Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+});
+
+Route::get('', [HomeController::class, 'index'])->name('home.index');
+
+Route::prefix('post')->group(function () {
+    Route::post('create', [PostController::class, 'create'])->name('auth.register');
 });

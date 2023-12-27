@@ -22,7 +22,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'role_id'
+        'isAdmin'
     ];
     protected $dateFormat = 'Y-m-d H:i:s';
 
@@ -31,17 +31,37 @@ class User extends Authenticatable
         'role_id'
     ];
 
-    public function role()
+    public function isAdmin()
     {
-        return $this->belongsTo(Role::class);
+        return $this->isAdmin;
     }
 
-    public function posts()
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Post::class, 'user_id');
     }
 
-    protected static function boot()
+    public function followings(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    public function followers(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+
+    public function follows(User $user): bool
+    {
+        return $this->followings()->where('follower_id', $user->id)->exists();
+    }
+
+    public function like()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'user_id', 'post_id');
+    }
+
+    protected static function boot(): void
     {
         parent::boot();
         static::deleting(function ($user) {
@@ -55,8 +75,7 @@ class User extends Authenticatable
 
     public function scopeSearch($query)
     {
-        if (request('key'))
-        {
+        if (request('key')) {
             $key = request('key');
             $query = $query->where('name', 'like', '%' . $key . '%');
         }

@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('path')->nullable();
 
-            $table->unsignedBigInteger('post_id');
-
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('CASCADE');
+            $table->foreignId('post_id')->constrained('post_id')->cascadeOnDelete();
         });
     }
 

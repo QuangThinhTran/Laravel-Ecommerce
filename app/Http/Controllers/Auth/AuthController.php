@@ -43,7 +43,7 @@ class AuthController extends Controller
                 'access_token' => $access_token,
                 'token_type' => 'Bearer',
                 'status_code' => ResponseAlias::HTTP_OK
-            ],ResponseAlias::HTTP_CREATED);
+            ], ResponseAlias::HTTP_CREATED);
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,

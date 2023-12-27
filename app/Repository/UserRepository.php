@@ -1,14 +1,18 @@
 <?php
+
 namespace App\Repository;
+
 use App\Models\User;
 use App\Repository\Interface\IUserRepository;
 use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements IUserRepository
 {
-    public function index(){
-        return User::all()->random()->get();
+    public function index()
+    {
+        return User::with('posts')->paginate(10);
     }
+
     public function login(array $data): bool|array
     {
         $user = [
