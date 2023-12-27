@@ -10,23 +10,15 @@ class FollowController extends Controller
 {
     public function follow(User $user)
     {
-        $auth = Auth::user();
-        if (isset($auth)) {
-            $follower = auth()->user();
-            $follower->followings()->attach($user);
-            return back();
-        }
-        return view('login');
+        $follower = auth()->user();
+        $follower->followings()->attach($user);
+        return back();
     }
 
     public function unfollow(User $user)
     {
-        $auth = Auth::user();
-        if (isset($auth)) {
-            $follower = auth()->user();
-            $follower->followings()->detach($user);
-            return back();
-        }
-        return view('login');
+        $follower = auth()->user();
+        $follower->followings()->detach($user);
+        return back();
     }
 }

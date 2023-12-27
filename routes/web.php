@@ -51,11 +51,11 @@ Route::prefix('search')->group(function () {
     Route::get('/user', [SearchController::class, 'searchUserByName'])->name('search.user');
 });
 
-Route::get('follow/{user}', [FollowController::class, 'follow'])->name('follow');
-Route::get('unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
-
 Route::middleware('admin')->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::get('follow/{user}', [FollowController::class, 'follow'])->name('follow');
+    Route::get('unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 });
 
 

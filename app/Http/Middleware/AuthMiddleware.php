@@ -24,7 +24,9 @@ class AuthMiddleware
     {
         $user = Auth::user();
 
-        if (Auth::check() && $user['role_id'] == Constant::ROLE_ADMIN) {
+        if (!isset($user)) {
+            return redirect()->route('redirect.login');
+        } else if ($user['role_id'] == Constant::ROLE_ADMIN) {
             return $next($request);
         } else {
             return redirect()->route('not.found');
