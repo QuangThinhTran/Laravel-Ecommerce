@@ -44,17 +44,27 @@ class User extends Authenticatable
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'user_id');
+        return $this->hasMany(Comment::class);
+    }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class);
     }
 
     public function followings()
     {
-        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
 
     public function followers()
     {
-        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
 
     public function follows(User $user)
@@ -62,22 +72,9 @@ class User extends Authenticatable
         return $this->followings()->where('follower_id', $user->id)->exists();
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-        static::deleting(function ($user) {
-            $user->posts()->delete();
-        });
-
-        static::restoring(function ($user) {
-            $user->posts()->onlyTrashed()->restore();
-        });
-    }
-
     public function scopeSearch($query)
     {
-        if (request('key'))
-        {
+        if (request('key')) {
             $key = request('key');
             $query = $query->where('name', 'like', '%' . $key . '%');
         }

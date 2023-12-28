@@ -18,12 +18,10 @@ return new class extends Migration {
             $table->string('avatar')->nullable()->default('avatar.svg');
             $table->string('password');
 
-            $table->unsignedBigInteger('role_id');
+            $table->foreignId('role_id')->constrained('role')->cascadeOnDelete();
 
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('role_id')->references('id')->on('role')->onDelete('CASCADE');
         });
     }
 

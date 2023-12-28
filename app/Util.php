@@ -10,22 +10,29 @@ trait Util
 {
     public function uploadAvatar(Request $request): string
     {
+        if (!$request->file()) {
+            return false;
+        }
+
         $nameImage = Str::random(10);
-        $fileName = "${ $nameImage }.jpg";
+        $fileName = "{ $nameImage }.jpg";
         $request->file('avatar')->storeAs('avatar', $fileName, 'public');
         return $fileName;
     }
 
-    public function uploadImage(Request $request)
+    public function uploadImages(Request $request, $product_id)
     {
-        if ($request->file()) {
+        if (!$request->file()) {
             return false;
         }
-        $images = $request->file();
+        $images = $request->file('path');
         foreach ($images as $img) {
+            $nameImage = Str::random(10);
+            $fileName = "{$nameImage }.jpg";
+            $img->storeAs('images', $fileName, 'public');
             Images::insert([
-                'path' => $img,
-                'post_id' => $request->post_id
+                'path' => $fileName,
+                'product_id' => $product_id
             ]);
         }
     }

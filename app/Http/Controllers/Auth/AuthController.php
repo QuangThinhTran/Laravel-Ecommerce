@@ -44,7 +44,6 @@ class AuthController extends Controller
         }
     }
 
-    //Demo middlware
     public function login(LoginRequest $request)
     {
         try {

@@ -30,6 +30,12 @@
                         <a class="nav-link active" aria-current="page">{{Auth::user()->name}}</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('product.create') }}">Product</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('attribute.create') }}">Attribute</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('auth.logout') }}" class="nav-link active" aria-current="page">Logout</a>
                     </li>
                 </ul>

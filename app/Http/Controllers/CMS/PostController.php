@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
+use App\Repository\Interface\ICategoryRepository;
 use App\Repository\Interface\IPostRepository;
 use App\Util;
 use Illuminate\Http\Request;
@@ -15,24 +16,25 @@ class PostController extends Controller
 {
     use Util;
 
+    protected ICategoryRepository $categoryRepository;
     protected IPostRepository $postRepository;
 
     public function __construct
     (
+        ICategoryRepository $categoryRepository,
         IPostRepository $postRepository
     ) {
+        $this->categoryRepository = $categoryRepository;
         $this->postRepository = $postRepository;
     }
 
-    public function create(PostRequest $request)
+    public function create()
     {
         try {
-            $input = $request->all();
+            $categories = $this->categoryRepository->all();
 
-            $this->postRepository->create($input);
-            return redirect()->route('home.index')->with('success', 'Idea created Successfully');
+            return view('products.list', compact('categories'));
         } catch (\Exception $e) {
-            DB::rollBack();
             return response()->json([
                 'result' => false,
                 'message' => $e->getMessage(),
@@ -44,9 +46,7 @@ class PostController extends Controller
     {
         try {
             $post = $this->postRepository->detail($id);
-            return response()->json([
-                'data' => $post
-            ]);
+            return view('posts.detail', compact('post'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,
@@ -63,8 +63,7 @@ class PostController extends Controller
                 return view('errors.not_found');
             }
             $post = $this->postRepository->detail($request->id);
-            if ($user['role_id'] == 1 || $post->user_id == $user['id'])
-            {
+            if ($user['role_id'] == 1 || $post->user_id == $user['id']) {
                 $this->postRepository->delete($request->id);
                 return back()->with('infor', 'Delete Success');
             }

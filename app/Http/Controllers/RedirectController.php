@@ -23,4 +23,9 @@ class RedirectController extends Controller
     {
         return view('index');
     }
+
+    public function products()
+    {
+        return view('products.list');
+    }
 }

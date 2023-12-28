@@ -22,28 +22,7 @@
             </div>
             <div class="col-6">
                 @if(Auth::check())
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    <h4> Share yours ideas </h4>
-                    <div class="row">
-                        <form action="{{ route('post.create') }}" method="post">
-                            @csrf
-                            <div class="mb-3">
-                                <textarea class="form-control" id="idea" name="content" rows="3"></textarea>
-                            </div>
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            @error('content')
-                            <div style="color:red;">{{ $message }}</div><br>
-                            @enderror
-                            <div class="">
-                                <button class="btn btn-dark" type="submit"> Share</button>
-                            </div>
-                        </form>
-                    </div>
+                    @include('posts.create')
                 @endif
                 <hr>
                 <div class="mt-3">
@@ -82,7 +61,8 @@
                                             <input type="hidden" name="user_id" value="{{Auth::id()}}">
                                             <input type="hidden" name="post_id" value="{{ $post->id }}">
                                             @error('title')
-                                            <div style="color:red;">{{ $message }}</div><br>
+                                            <div style="color:red;">{{ $message }}</div>
+                                            <br>
                                             @enderror
                                             <div>
                                                 <button type="submit" class="btn btn-primary btn-sm"> Post Comment
@@ -105,6 +85,33 @@
                                                 <p class="fs-6 mt-3 fw-light">
                                                     {{ $comment->title }}
                                                 </p>
+                                                <div style="margin: 20px 0">
+                                                    <form action="{{ route('comment.add.child') }}" method="post">
+                                                        @csrf
+                                                        <input name="content">
+                                                        <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                                                        <input type="hidden" name="comment_id"
+                                                               value="{{ $comment->id }}">
+                                                        <button type="submit">Share</button>
+                                                    </form>
+                                                </div>
+                                                @foreach($comment->childComments as $childComment)
+                                                    <div class="d-flex align-items-start">
+                                                        <img style="width:35px" class="me-2 avatar-sm rounded-circle"
+                                                             src="https://api.dicebear.com/6.x/fun-emoji/svg?seed=Luigi"
+                                                             alt="Luigi Avatar">
+                                                        <div class="w-100">
+                                                            <div class="d-flex justify-content-between">
+                                                                <h6 class="">{{ $childComment->user->name }}
+                                                                </h6>
+                                                                <small class="fs-6 fw-light text-muted">{{ $childComment->created_at }}</small>
+                                                            </div>
+                                                            <p class="fs-6 mt-3 fw-light">
+                                                                {{ $childComment->content }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     @endforeach

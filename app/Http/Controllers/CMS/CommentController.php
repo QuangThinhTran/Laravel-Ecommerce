@@ -14,8 +14,7 @@ class CommentController extends Controller
     public function __construct
     (
         ICommentRepository $commentRepository
-    )
-    {
+    ) {
         $this->commentRepository = $commentRepository;
     }
 
@@ -23,6 +22,13 @@ class CommentController extends Controller
     {
         $input = $request->all();
         $this->commentRepository->add($input);
+        return back();
+    }
+
+    public function addCommentChild(Request $request)
+    {
+        $input = $request->all();
+        $this->commentRepository->addChildComment($input);
         return back();
     }
 }

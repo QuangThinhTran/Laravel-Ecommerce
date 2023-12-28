@@ -1,5 +1,5 @@
-<link href="https://bootswatch.com/5/sketchy/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
+<link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" crossorigin="anonymous"/>
+<link href="{{ asset('assets/css/slick-carousel/slick.min.css') }}" rel="stylesheet" crossorigin="anonymous">
+<link href="{{ asset('assets/css/slick-carousel/slick-theme.min.css') }}" rel="stylesheet" crossorigin="anonymous"/>
+<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">

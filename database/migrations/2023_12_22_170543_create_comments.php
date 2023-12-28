@@ -15,11 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('title');
 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('post_id');
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE');
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('CASCADE');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
 
             $table->timestamps();
         });

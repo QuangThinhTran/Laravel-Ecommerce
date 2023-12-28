@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  * @method static create(array $data)
  * @method static find($id)
+ * @method static findOrFail($id)
  */
 class Post extends Model
 {
@@ -34,8 +35,13 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    protected static function boot()
+    public function products()
     {
-        parent::boot();
+        return $this->hasMany(Product::class);
+    }
+
+    public function listProduct()
+    {
+        return $this->belongsToMany(Post::class, 'list_product', 'post_id', 'product_id');
     }
 }

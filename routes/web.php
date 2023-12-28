@@ -9,7 +9,10 @@ use App\Http\Controllers\CMS\UserController;
 use App\Http\Controllers\CMS\CommentController;
 use App\Http\Controllers\CMS\SearchController;
 use App\Http\Controllers\Index\DashboardController;
-use App\Http\Controllers\CMS\FollowController;
+use App\Http\Controllers\CMS\PivotTableController;
+use App\Http\Controllers\CMS\ProductController;
+use App\Http\Controllers\CMS\CategoryController;
+use App\Http\Controllers\CMS\AttributeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +27,8 @@ use App\Http\Controllers\CMS\FollowController;
 Route::prefix('view')->group(function () {
     Route::get('register', [RedirectController::class, 'register'])->name('redirect.register');
     Route::get('login', [RedirectController::class, 'login'])->name('redirect.login');
+
+    Route::get('list-product', [RedirectController::class, 'products'])->name('redirect.products');
 
     Route::get('not-found', [RedirectController::class, 'notFound'])->name('not.found');
 });
@@ -40,24 +45,43 @@ Route::prefix('user')->group(function () {
 
 Route::prefix('post')->group(function () {
     Route::post('create', [PostController::class, 'create'])->name('post.create');
+    Route::get('detail/{id}', [PostController::class, 'detail'])->name('post.detail');
     Route::get('delete', [PostController::class, 'delete'])->name('post.delete');
 });
 
-Route::prefix('search')->group(function () {
-    Route::get('/user', [SearchController::class, 'searchUserByName'])->name('search.user');
+Route::prefix('category')->group(function () {
+    Route::get('list', [CategoryController::class, 'index'])->name('category.list');
+});
+
+Route::prefix('attribute')->group(function () {
+    Route::get('create', [AttributeController::class, 'create'])->name('attribute.create');
+    Route::post('store', [AttributeController::class, 'store'])->name('attribute.store');
+//    Route::post('detail/{id}', [AttributeController::class, 'detail'])->name('attribute.detail');
+});
+
+Route::prefix('product')->group(function () {
+    Route::get('create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('store', [ProductController::class, 'store'])->name('product.store');
+    Route::post('detail/{id}', [ProductController::class, 'detail'])->name('product.detail');
+    Route::post('update/{id}', [ProductController::class, 'update'])->name('product.update');
+    Route::get('delete/{id}', [ProductController::class, 'delete'])->name('product.delete');
+    Route::get('restore/{id}', [ProductController::class, 'restore'])->name('product.restore');
 });
 
 Route::prefix('search')->group(function () {
     Route::get('/user', [SearchController::class, 'searchUserByName'])->name('search.user');
+});
+
+Route::get('follow/{user}', [PivotTableController::class, 'follow'])->name('follow');
+Route::get('unfollow/{user}', [PivotTableController::class, 'unfollow'])->name('unfollow');
+
+Route::controller(CommentController::class)->group(function () {
+    Route::post('add-comment-child', 'addCommentChild')->name('comment.add.child');
 });
 
 Route::middleware('admin')->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-
-    Route::get('follow/{user}', [FollowController::class, 'follow'])->name('follow');
-    Route::get('unfollow/{user}', [FollowController::class, 'unfollow'])->name('unfollow');
 });
-
 
 Route::get('', [HomeController::class, 'index'])->name('home.index');
 Route::post('/comment', [CommentController::class, 'addComment'])->name('comment.add');
