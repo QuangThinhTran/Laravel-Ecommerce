@@ -4,8 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @method static create(array $data)
+ */
 class Cart extends Model
 {
     use HasFactory, SoftDeletes;
@@ -17,7 +21,7 @@ class Cart extends Model
         'user_id'
     ];
 
-    public function detail()
+    public function detail(): BelongsToMany
     {
         return $this->belongsToMany(Cart::class, 'cart_detail', 'cart_id', 'product_id');
     }

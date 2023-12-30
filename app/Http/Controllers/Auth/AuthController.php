@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -22,7 +24,12 @@ class AuthController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function register(RegisterRequest $request)
+    /**
+     * Register account
+     * @param RegisterRequest $request
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function register(RegisterRequest $request): RedirectResponse|JsonResponse
     {
         try {
             $input = $request->all();
@@ -44,7 +51,12 @@ class AuthController extends Controller
         }
     }
 
-    public function login(LoginRequest $request)
+    /**
+     * Login account
+     * @param LoginRequest $request
+     * @return  RedirectResponse | JsonResponse
+     * */
+    public function login(LoginRequest $request): RedirectResponse|JsonResponse
     {
         try {
             $input = $request->all();
@@ -68,7 +80,11 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    /**
+     * Logout account
+     * @return RedirectResponse
+     * */
+    public function logout(): RedirectResponse
     {
         Auth::logout();
         return redirect()->route('home.index');

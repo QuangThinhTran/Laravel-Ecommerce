@@ -11,14 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Handle an incoming request.
  *
- * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
+ * @param Closure(Request): (Response) $next
  */
 class AuthMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
+     * @param Request $request
+     * @param Closure(Request): (Response) $next
+     * @return Response
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -26,10 +27,12 @@ class AuthMiddleware
 
         if (!isset($user)) {
             return redirect()->route('redirect.login');
-        } else if ($user['role_id'] == Constant::ROLE_ADMIN) {
-            return $next($request);
         } else {
-            return redirect()->route('not.found');
+            if ($user['role_id'] == Constant::ROLE_ADMIN) {
+                return $next($request);
+            } else {
+                return redirect()->route('not.found');
+            }
         }
     }
 }

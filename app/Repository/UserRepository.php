@@ -1,15 +1,31 @@
 <?php
+
 namespace App\Repository;
+
 use App\Models\User;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Collection\Collection;
 
 class UserRepository implements IUserRepository
 {
-    public function index(){
-        return User::limit(3)->get();
+    /**
+     * Get list Users
+     * @return LengthAwarePaginator
+     * */
+    public function index(): LengthAwarePaginator
+    {
+        return User::with('role', 'carts', 'comments', 'posts', 'attributes')->paginate(10);
     }
+
+    /**
+     * Login User
+     * @param array $data
+     * @return bool|array
+     * */
     public function login(array $data): bool|array
     {
         $user = [
@@ -23,7 +39,12 @@ class UserRepository implements IUserRepository
         return false;
     }
 
-    public function register(array $data): User
+    /**
+     * Register User
+     * @param array $data
+     * @return Model|Collection
+     * */
+    public function register(array $data): Model|Collection
     {
         return User::create([
             'name' => $data['name'],
@@ -34,11 +55,21 @@ class UserRepository implements IUserRepository
         ]);
     }
 
-    public function find($id) {
+    /**
+     * Detail User
+     * @param $id
+     * @return Model|Collection
+     * */
+    public function find($id): Model|Collection
+    {
         return User::with('posts')->find($id);
     }
 
-    public function search()
+    /**
+     * Search User by name
+     * @return Model|Collection
+     * */
+    public function search(): Model|Collection
     {
         return User::search()->get();
     }

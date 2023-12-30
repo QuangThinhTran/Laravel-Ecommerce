@@ -13,6 +13,7 @@ use App\Repository\Interface\IAttributeRepository;
 use App\Repository\Interface\ICommentRepository;
 use App\Repository\Interface\IPostRepository;
 use App\Repository\Interface\IProductRepository;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PivotTableController extends Controller
@@ -35,14 +36,24 @@ class PivotTableController extends Controller
         $this->attributeRepository = $attributeRepository;
     }
 
-    public function follow(User $user)
+    /**
+     * Feature follow user
+     * @param User $user
+     * @return RedirectResponse
+     * */
+    public function follow(User $user): RedirectResponse
     {
         $follower = auth()->user();
         $follower->followings()->attach($user);
         return back();
     }
 
-    public function unfollow(User $user)
+    /**
+     * Feature unfollow user
+     * @param User $user
+     * @return RedirectResponse
+     * */
+    public function unfollow(User $user): RedirectResponse
     {
         $follower = auth()->user();
         $follower->followings()->detach($user);

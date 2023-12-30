@@ -4,35 +4,68 @@ namespace App\Repository;
 
 use App\Models\Order;
 use App\Repository\Interface\IOrderRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class OrderRepository implements IOrderRepository
 {
-    public function index()
+    /**
+     * Get list Orders and paginate
+     * @return LengthAwarePaginator
+     * */
+    public function index(): LengthAwarePaginator
     {
         return Order::with('cart', 'user', 'status')->orderByDesc('id')->paginate(10);
     }
 
-    public function create(array $data)
+    /**
+     * Create Order
+     * @param array $data
+     * @return Model|Collection
+     * */
+    public function create(array $data): Model|Collection
     {
         return Order::create($data);
     }
 
-    public function detail($id)
+    /**
+     * Detail Order
+     * @param $id
+     * @return Model|Collection
+     * */
+    public function detail($id): Model|Collection
     {
         return Order::with('cart', 'user', 'status')->findOrFail($id);
     }
 
-    public function update($id, array $data)
+    /**
+     * Detail Order
+     * @param $id
+     * @param array $data
+     * @return bool
+     * */
+    public function update($id, array $data): bool
     {
         return Order::with('cart', 'user', 'status')->findOrFail($id)->update($data);
     }
 
-    public function delete($id)
+    /**
+     * Delete Order
+     * @param $id
+     * @return bool|null
+     * */
+    public function delete($id): bool|null
     {
         return Order::with('cart', 'user', 'status')->findOrFail($id)->delete();
     }
 
-    public function restore($id)
+    /**
+     * Restore Order
+     * @param $id
+     * @return bool
+     * */
+    public function restore($id): bool
     {
         return Order::with('cart', 'user', 'status')->findOrFail($id)->withTrashed()->restore();
     }

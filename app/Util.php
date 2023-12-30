@@ -8,6 +8,11 @@ use Illuminate\Support\Str;
 
 trait Util
 {
+    /**
+     * Upload avatar User
+     * @param Request $request
+     * @return string
+     * */
     public function uploadAvatar(Request $request): string
     {
         if (!$request->file()) {
@@ -20,7 +25,13 @@ trait Util
         return $fileName;
     }
 
-    public function uploadImages(Request $request, $product_id)
+    /**
+     * Upload multiple image Products
+     * @param Request $request
+     * @param $product_id
+     * @return null| bool
+     * */
+    public function uploadImages(Request $request, $product_id): null|bool
     {
         if (!$request->file()) {
             return false;

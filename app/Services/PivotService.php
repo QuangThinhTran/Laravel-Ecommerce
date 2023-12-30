@@ -29,7 +29,13 @@ class PivotService
         $this->attributeRepository = $attributeRepository;
     }
 
-    public function addAttributesProduct($id, array $attributes)
+    /**
+     * Attach Attributes to Product
+     * @param $id
+     * @param array $attributes
+     * @return void
+     * */
+    public function addAttributesProduct($id, array $attributes): void
     {
         $product = $this->productRepository->find($id);
         foreach ($attributes as $attribute) {
@@ -37,7 +43,13 @@ class PivotService
         }
     }
 
-    public function removeAttributesProduct($id, array $attributes)
+    /**
+     * Detach Attributes to Product
+     * @param $id
+     * @param array $attributes
+     * @return void
+     * */
+    public function removeAttributesProduct($id, array $attributes): void
     {
         $product = $this->productRepository->find($id);
         foreach ($attributes as $attribute) {

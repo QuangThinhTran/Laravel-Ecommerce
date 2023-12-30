@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Repository\Interface\ICategoryRepository;
 use App\Repository\Interface\IProductRepository;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class CategoryController extends Controller
@@ -22,13 +25,17 @@ class CategoryController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index()
+    /**
+     * Get View Create Category
+     * @return View | JsonResponse
+     * */
+    public function index(): View|JsonResponse
     {
         try {
             $categories = $this->categoryRepository->all();
             $products = $this->productRepository->index();
 
-            return view('products.list', compact('categories','products'));
+            return view('products.list', compact('categories', 'products'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,
@@ -37,7 +44,12 @@ class CategoryController extends Controller
         }
     }
 
-    public function create(CategoryRequest $request)
+    /**
+     * Create Category
+     * @param CategoryRequest $request
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function create(CategoryRequest $request): RedirectResponse|JsonResponse
     {
         try {
             $input = $request->all();
@@ -54,7 +66,12 @@ class CategoryController extends Controller
         }
     }
 
-    public function delete($id)
+    /**
+     * Get View Create Category
+     * @param $id // Id category
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function delete($id): RedirectResponse|JsonResponse
     {
         try {
             $this->categoryRepository->delete($id);

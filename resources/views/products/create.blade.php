@@ -17,8 +17,8 @@
         <br>
         @enderror
         <div class="mb-3">
-            <textarea class="form-control" id="idea" name="description" rows="3"
-                      placeholder="description"></textarea>
+                <textarea class="form-control" id="idea" name="description" rows="3"
+                          placeholder="description"></textarea>
         </div>
         @error('description')
         <div style="color:red;">{{ $message }}</div>
@@ -68,11 +68,15 @@
         <div style="color:red;">{{ $message }}</div>
         <br>
         @enderror
-        <div class="mb-3" style="display: flex; gap: 25px; align-items: center">
+        <div class="mb-3 d-flex flex-column">
             <label>Attribute :</label>
-            @foreach($attributes as $attribute)
-                <input type="checkbox" name="attribute[]" value="{{ $attribute->id }}">{{ $attribute->name }}
-            @endforeach
+            <div class="d-flex gap-3 align-items-center">
+                @foreach($attributes as $attribute)
+                    <input type="checkbox" name="attribute[]" id="attribute"
+                           value="{{ $attribute->id }}">{{ $attribute->name }}
+                @endforeach
+            </div>
+
         </div>
         @error('category_id')
         <div style="color:red;">{{ $message }}</div>
@@ -83,3 +87,17 @@
         </div>
     </form>
 </div>
+<script>
+
+    // const checkbox = document.getElementById('attribute');
+    // const dataToShow = document.getElementById('inputShow');
+    //
+    //
+    // checkbox.addEventListener('change', function () {
+    //     if (this.checked) {
+    //         dataToShow.style.display = 'block'; // Show the data if checkbox is checked
+    //     } else {
+    //         dataToShow.style.display = 'none'; // Hide the data if checkbox is unchecked
+    //     }
+    // });
+</script>

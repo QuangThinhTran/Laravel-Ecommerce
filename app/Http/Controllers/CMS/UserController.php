@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -11,19 +13,23 @@ class UserController extends Controller
     public function __construct
     (
         IUserRepository $userRepository
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
     }
 
-    public function detail($id)
+    /**
+     * Get detail User
+     * @param $id
+     * @return View
+     * */
+    public function detail($id): View
     {
         $user = $this->userRepository->find($id);
         if (!$user) {
-           return view('errors.not_found');
+            return view('errors.not_found');
         }
         $paginatedPosts = $user->posts()->paginate(5);
         $users = $this->userRepository->index();
-        return view('profile', compact('user','users', 'paginatedPosts'));
+        return view('profile', compact('user', 'users', 'paginatedPosts'));
     }
 }

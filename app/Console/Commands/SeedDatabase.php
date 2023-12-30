@@ -26,6 +26,14 @@ class SeedDatabase extends Command
      */
     public function handle()
     {
-        Artisan::call('db:seed --class=DatabaseSeeder');
+        Artisan::call('db:seed --class=RoleSeeder');
+        Artisan::call('db:seed --class=UsersSeeder');
+        Artisan::call('db:seed --class=StatusSeeder');
+        Artisan::call('db:seed --class=CategorySeeder');
+        Artisan::call('db:seed --class=PostsSeeder');
+        Artisan::call('db:seed --class=ProductsSeeder');
+        Artisan::call('db:seed --class=ImagesSeeder');
+        Artisan::call('db:seed --class=CommentsSeeder');
+        Artisan::call('db:seed --class=AttributesSeeder');
     }
 }

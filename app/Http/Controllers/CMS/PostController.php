@@ -7,9 +7,11 @@ use App\Http\Requests\PostRequest;
 use App\Repository\Interface\ICategoryRepository;
 use App\Repository\Interface\IPostRepository;
 use App\Util;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class PostController extends Controller
@@ -28,7 +30,11 @@ class PostController extends Controller
         $this->postRepository = $postRepository;
     }
 
-    public function create()
+    /**
+     * Get view list product to create
+     * @return View | JsonResponse
+     * */
+    public function create(): View | JsonResponse
     {
         try {
             $categories = $this->categoryRepository->all();
@@ -42,7 +48,12 @@ class PostController extends Controller
         }
     }
 
-    public function detail($id)
+    /**
+     * Get view list product to create
+     * @param $id // Id post
+     * @return View | JsonResponse
+     * */
+    public function detail($id): View | JsonResponse
     {
         try {
             $post = $this->postRepository->detail($id);
@@ -55,7 +66,12 @@ class PostController extends Controller
         }
     }
 
-    public function delete(Request $request)
+    /**
+     * Get view list product to create
+     * @param Request $request
+     * @return View | JsonResponse
+     * */
+    public function delete(Request $request): View | RedirectResponse
     {
         try {
             $user = Auth::user();

@@ -2,9 +2,9 @@
 
 namespace App\Repository\Interface;
 
-interface IAttributeRepository
+interface IAttributeChildRepository
 {
-    public function index();
+    public function all();
 
     public function create(array $data);
 

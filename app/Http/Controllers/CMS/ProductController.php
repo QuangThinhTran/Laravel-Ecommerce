@@ -10,8 +10,11 @@ use App\Repository\Interface\ICategoryRepository;
 use App\Repository\Interface\IProductRepository;
 use App\Services\PivotService;
 use App\Util;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class ProductController extends Controller
@@ -36,7 +39,11 @@ class ProductController extends Controller
         $this->pivotService = $pivotService;
     }
 
-    public function create()
+    /**
+     * Get view list products
+     * @return View | JsonResponse
+     * */
+    public function create(): View|JsonResponse
     {
         try {
             $categories = $this->categoryRepository->all();
@@ -52,16 +59,18 @@ class ProductController extends Controller
         }
     }
 
-    public function store(ProductRequest $request)
+    /**
+     * Create product
+     * @param ProductRequest $request
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function store(ProductRequest $request): RedirectResponse|JsonResponse
     {
         DB::beginTransaction();
         try {
             $input = $request->all();
 
             $product = $this->productRepository->create($input);
-            if (empty($product)) {
-                return back()->with('infor', 'Create Failed');
-            }
             self::uploadImages($request, $product['id']);
             $this->pivotService->addAttributesProduct($product['id'], $input['attribute']);
             DB::commit();
@@ -75,14 +84,16 @@ class ProductController extends Controller
         }
     }
 
-    public function detail($id)
+    /**
+     * Get detail Product by id
+     * @param $id
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function detail($id): RedirectResponse|JsonResponse
     {
         try {
             $product = $this->productRepository->find($id);
-            if (empty($product)) {
-                return back()->with('infor', 'Not found');
-            }
-            return redirect()->route('home.index');
+            return redirect()->route('home.index', compact('product'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,
@@ -91,7 +102,13 @@ class ProductController extends Controller
         }
     }
 
-    public function update($id, Request $request)
+    /**
+     * Update Product
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function update($id, Request $request): RedirectResponse|JsonResponse
     {
         try {
             $input = $request->all();
@@ -106,7 +123,12 @@ class ProductController extends Controller
         }
     }
 
-    public function delete($id)
+    /**
+     * Delete Product
+     * @param $id
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function delete($id): RedirectResponse|JsonResponse
     {
         try {
             $this->productRepository->delete($id);
@@ -119,7 +141,12 @@ class ProductController extends Controller
         }
     }
 
-    public function restore($id)
+    /**
+     * Restore Product
+     * @param $id
+     * @return RedirectResponse | JsonResponse
+     * */
+    public function restore($id): RedirectResponse|JsonResponse
     {
         try {
             $this->productRepository->restore($id);

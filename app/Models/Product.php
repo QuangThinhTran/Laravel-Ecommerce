@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -28,28 +30,31 @@ class Product extends Model
 
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function images()
+    public function images(): HasMany
     {
         return $this->hasMany(Images::class);
     }
 
-    public function post()
+    public function post(): BelongsTo
     {
         return $this->belongsTo(Post::class);
     }
 
-    public function attributes()
+    /**
+     * Get attributes by Product
+     * */
+    public function attributes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Attribute::class, 'attribute_list','product_id', 'attribute_id',);
+        return $this->belongsToMany(Attribute::class, 'attribute_list', 'product_id', 'attribute_id',);
     }
 }

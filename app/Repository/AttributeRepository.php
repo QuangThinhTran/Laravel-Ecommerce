@@ -4,35 +4,68 @@ namespace App\Repository;
 
 use App\Models\Attribute;
 use App\Repository\Interface\IAttributeRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class AttributeRepository implements IAttributeRepository
 {
-    public function index()
+    /**
+     * Get list Attributes by user id and paginate
+     * @return LengthAwarePaginator
+     * */
+    public function index(): LengthAwarePaginator
     {
         return Attribute::with('user')->where('user_id', auth()->id())->paginate(10);
     }
 
-    public function create(array $data)
+    /**
+     * Get create Attribute
+     * @param array $data
+     * @return Model|Collection
+     * */
+    public function create(array $data): Model|Collection
     {
         return Attribute::create($data);
     }
 
-    public function detail($id)
+    /**
+     * Get detail Attribute
+     * @param $id
+     * @return Model|Collection
+     */
+    public function detail($id): Model|Collection
     {
         return Attribute::with('user')->findOrFail($id);
     }
 
-    public function update($id, array $data)
+    /**
+     * update Attribute
+     * @param $id
+     * @param array $data
+     * @return bool
+     */
+    public function update($id, array $data): bool
     {
         return Attribute::findOrFail($id)->update($data);
     }
 
-    public function delete($id)
+    /**
+     * delete Attribute
+     * @param $id
+     * @return bool|null
+     */
+    public function delete($id): bool|null
     {
         return Attribute::findOrFail($id)->delete();
     }
 
-    public function restore($id)
+    /**
+     * restore Attribute
+     * @param $id
+     * @return bool
+     */
+    public function restore($id): bool
     {
         return Attribute::findOrFail($id)->withTrashed()->restore();
     }

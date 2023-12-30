@@ -14,26 +14,44 @@
      data-bs-theme="dark">
     <div class="container">
         @if(Auth::check())
-            <a class="navbar-brand fw-light" href="/"><span class="fas fa-brain me-1"> </span>@if(Auth::user()->role_id == 1) Dashboard @else Social @endif</a>
+            <a class="navbar-brand fw-light" href="/"><span
+                        class="fas fa-brain me-1"> </span>@if(Auth::user()->role_id == 1)
+                    Dashboard
+                @else
+                    Social
+                @endif</a>
         @else
             <a class="navbar-brand fw-light" href="/"><span class="fas fa-brain me-1"> </span>Social</a>
         @endif
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div>
             @if(Auth::check())
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page">{{Auth::user()->name}}</a>
                     </li>
+                </ul>
+            @else
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page">Welcome</a>
+                    </li>
+                </ul>
+            @endif
+        </div>
+        <div id="navbarNav">
+            @if(Auth::check())
+                <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('product.create') }}">Product</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('attribute.create') }}">Attribute</a>
+                        <a class="nav-link active" aria-current="page"
+                           href="{{ route('attribute.create') }}">Attribute</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('attribute.create') }}">Attribute
+                            Child</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('auth.logout') }}" class="nav-link active" aria-current="page">Logout</a>

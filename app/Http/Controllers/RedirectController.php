@@ -2,29 +2,51 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
+
 class RedirectController extends Controller
 {
-    public function register()
+    /**
+     * Get view register User
+     * @return View
+     * */
+    public function register(): View
     {
         return view('register');
     }
 
-    public function login()
+    /**
+     * Get view login User
+     * @return View
+     * */
+    public function login(): View
     {
         return view('login');
     }
 
-    public function notFound()
+    /**
+     * Get view not found
+     * @return View
+     * */
+    public function notFound(): View
     {
         return view('errors.not_found');
     }
 
-    public function index()
+    /**
+     * Get view index
+     * @return View
+     * */
+    public function index(): View
     {
         return view('index');
     }
 
-    public function products()
+    /**
+     * Get view products
+     * @return View
+     * */
+    public function products(): View
     {
         return view('products.list');
     }

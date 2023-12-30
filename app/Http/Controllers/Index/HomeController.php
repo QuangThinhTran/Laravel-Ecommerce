@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Index;
 use App\Http\Controllers\Controller;
 use App\Repository\Interface\IPostRepository;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class HomeController extends Controller
@@ -21,7 +23,11 @@ class HomeController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index()
+    /**
+     * Get home index
+     * @return View | JsonResponse
+     * */
+    public function index(): View | JsonResponse
     {
         try {
             $posts = $this->postRepository->index();

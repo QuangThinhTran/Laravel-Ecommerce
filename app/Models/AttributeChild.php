@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Images extends Model
+class AttributeChild extends Model
 {
     use HasFactory;
 
-    protected $table = 'Images';
+    protected $table = 'attribute_child';
     protected $fillable = [
-        'path',
-        'product_id'
+        'name',
+        'description',
+        'price'
     ];
 
-    public function product(): BelongsTo
+    public function attribute(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Attribute::class);
     }
 }
