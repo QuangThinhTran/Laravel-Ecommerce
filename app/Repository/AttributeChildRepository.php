@@ -14,7 +14,7 @@ class AttributeChildRepository implements IAttributeChildRepository
      */
     public function all(): LengthAwarePaginator
     {
-        return AttributeChild::with('attribute')->paginate();
+        return AttributeChild::with('attribute')->paginate(10);
     }
 
     /**
@@ -24,16 +24,16 @@ class AttributeChildRepository implements IAttributeChildRepository
      */
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        return AttributeChild::create($data);
     }
 
     /**
      * @param $id
      * @return mixed
      */
-    public function detail($id)
+    public function find($id)
     {
-        // TODO: Implement detail() method.
+        return AttributeChild::where('attribute_id', $id)->get();
     }
 
     /**

@@ -3,11 +3,11 @@
     <div class="container py-4">
         <div class="row" style="justify-content: center">
             <div class="col-6">
-                @include('attributes.create')
+                @include('attribute_child.create')
                 <hr>
                 <h1>Attribute list</h1>
                 <div class="mt-3">
-                    @foreach($attributes as $attribute)
+                    @foreach($attributes_child as $attribute)
                         <div class="card">
                             <div class="d-flex align-items-center gap-3 px-3 ">
                                 Name:
@@ -18,8 +18,8 @@
                         </div>
                     @endforeach
                 </div>
-                @if($attributes->isNotEmpty())
-                    {{ $attributes->links('vendor.pagination.bootstrap-4')}}
+                @if($attributes_child->isNotEmpty())
+                    {{ $attributes_child->links('vendor.pagination.bootstrap-4')}}
                 @endif
             </div>
         </div>

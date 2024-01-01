@@ -16,7 +16,7 @@ class ProductRepository implements IProductRepository
      * */
     public function index(): LengthAwarePaginator
     {
-        return Product::with('category', 'user', 'images', 'post', 'attributes')->where('user_id',
+        return Product::with('category', 'user', 'images', 'post', 'attributes', 'attributesChild.attribute')->where('user_id',
             auth()->id())->orderByDesc('id')->paginate(10);
     }
 

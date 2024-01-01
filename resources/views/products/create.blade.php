@@ -68,36 +68,109 @@
         <div style="color:red;">{{ $message }}</div>
         <br>
         @enderror
-        <div class="mb-3 d-flex flex-column">
+        <div class="mb-3 d-flex flex gap-3 align-items-center">
             <label>Attribute :</label>
+{{--            <select class="form-select" name="category_id" id="attributeSelect" style="width: fit-content">--}}
+{{--                <option selected value="">Choose Attribute</option>--}}
+{{--                @foreach($attributes as $attribute)--}}
+{{--                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
             <div class="d-flex gap-3 align-items-center">
                 @foreach($attributes as $attribute)
-                    <input type="checkbox" name="attribute[]" id="attribute"
+                    <input type="checkbox" name="attribute[]" class="attribute-checkbox"
                            value="{{ $attribute->id }}">{{ $attribute->name }}
                 @endforeach
             </div>
-
         </div>
-        @error('category_id')
-        <div style="color:red;">{{ $message }}</div>
-        <br>
-        @enderror
+
+        <div class="mb-3" style="display: flex; gap: 25px; align-items: center" id="attributeChildView">
+            <label>Attribute Child</label>
+        </div>
+
         <div class="">
             <button class="btn btn-dark" type="submit"> Share</button>
         </div>
     </form>
 </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>
+    //Checked multiple
+    $(document).ready(function () {
+        $('.attribute-checkbox').change(function () {
+            var selectedAttributes = [];
 
-    // const checkbox = document.getElementById('attribute');
-    // const dataToShow = document.getElementById('inputShow');
+            $('.attribute-checkbox:checked').each(function () {
+                selectedAttributes.push($(this).val());
+            });
+            if (selectedAttributes.length > 0) {
+                // Load child view based on selected attributes
+                $.ajax({
+                    url: '/attribute-child/detail', // Replace with your route or endpoint to load the child view for multiple attributes
+                    method: 'GET',
+                    data: { attributes: selectedAttributes },
+                    success: function (data) {
+                        $('#attributeChildView').append('<div>' + data + '</div>');
+                        $('#attributeChildView').show();
+                    },
+                    error: function () {
+                        console.error('Error loading child view');
+                    }
+                });
+            } else {
+                $('#attributeChildView').empty();
+                $('#attributeChildView').hide();
+            }
+        });
+    });
+
+    //Checked One
+    // $(document).ready(function () {
+    //     $('#attribute-checkbox').change(function () {
+    //         if ($(this).is(':checked')) {
+    //             var selectedAttributeId = $(this).val();
+    //             console.log(selectedAttributeId)
+    //             // Load child view based on selected attribute ID
+    //             $.ajax({
+    //                 url: '/attribute-child/detail', // Replace with your route or endpoint to load the child view
+    //                 method: 'GET',
+    //                 data: { attribute_id: selectedAttributeId },
+    //                 success: function (data) {
+    //                     $('#attributeChildView').html(data);
+    //                     $('#attributeChildView').show();
+    //                 },
+    //                 error: function () {
+    //                     console.error('Error loading child view');
+    //                 }
+    //             });
+    //         } else {
+    //             $('#attributeChildView').empty();
+    //             $('#attributeChildView').hide();
+    //         }
+    //     });
+    // });
+
+    //Select
+    // $(document).ready(function () {
+    //     $('#attributeSelect').change(function () {
+    //         var selectedAttributeId = $(this).val();
     //
-    //
-    // checkbox.addEventListener('change', function () {
-    //     if (this.checked) {
-    //         dataToShow.style.display = 'block'; // Show the data if checkbox is checked
-    //     } else {
-    //         dataToShow.style.display = 'none'; // Hide the data if checkbox is unchecked
-    //     }
+    //         if (selectedAttributeId !== '') {
+    //             // Load child view based on the selected attribute ID
+    //             $.ajax({
+    //                 url: '/attribute-child/detail', // Replace with your route or endpoint to load the child view
+    //                 method: 'GET',
+    //                 data: { attribute_id: selectedAttributeId },
+    //                 success: function (data) {
+    //                     $('#attributeChildView').html(data);
+    //                 },
+    //                 error: function () {
+    //                     console.error('Error loading child view');
+    //                 }
+    //             });
+    //         } else {
+    //             $('#attributeChildView').empty();
+    //         }
+    //     });
     // });
 </script>

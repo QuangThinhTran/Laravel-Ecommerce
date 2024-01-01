@@ -57,28 +57,37 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if(!is_null($product->attributes))
+
+{{--                                @if(!is_null($product->attributes))--}}
+{{--                                    <hr>--}}
+{{--                                    Attribute--}}
+{{--                                    @foreach($product->attributes as $attribute)--}}
+{{--                                        <div class="d-flex justify-content-between mt-3">--}}
+{{--                                            <div>--}}
+{{--                                                <span> Name :</span>--}}
+{{--                                                <span class="fs-6 fw-light text-muted"> {{ $attribute->name }} </span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
+                                @if(!is_null($product->attributesChild))
                                     <hr>
-                                    Attribute
-                                    @foreach($product->attributes as $attribute)
+                                    Attribute Child
+                                    @foreach($product->attributesChild as $attribute_child)
                                         <div class="d-flex justify-content-between mt-3">
                                             <div>
                                                 <span> Name :</span>
-                                                <span class="fs-6 fw-light text-muted"> {{ $attribute->name }} </span>
+                                                <span class="fs-6 fw-light text-muted"> {{ $attribute_child->name }} </span>
                                             </div>
                                             <div>
                                                 <span> Price :</span>
-                                                <span class="fs-6 fw-light text-muted"> {{ $attribute->price }} </span>
+                                                <span class="fs-6 fw-light text-muted"> {{ $attribute_child->price }} </span>
+                                            </div>
+                                            <div>
+                                                <span> Type :</span>
+                                                <span class="fs-6 fw-light text-muted"> {{ $attribute_child->attribute->name }} </span>
                                             </div>
                                         </div>
-                                        <div class="mt-2">
-                                            <span> Description :</span>
-                                            <span class="fs-6 fw-light text-muted"> {{ $attribute->description }} </span>
-                                        </div>
-{{--                                        <div class="mt-2">--}}
-{{--                                            <span> Detail attribute :</span>--}}
-{{--                                            <a href="">{{ $attribute->id }}</a>--}}
-{{--                                        </div>--}}
                                     @endforeach
                                 @endif
                             </div>

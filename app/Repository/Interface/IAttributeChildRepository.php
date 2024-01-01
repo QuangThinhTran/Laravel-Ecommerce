@@ -8,7 +8,7 @@ interface IAttributeChildRepository
 
     public function create(array $data);
 
-    public function detail($id);
+    public function find($id);
 
     public function update($id, array $data);
 

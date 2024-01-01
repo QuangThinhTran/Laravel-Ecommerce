@@ -59,6 +59,12 @@ Route::prefix('attribute')->group(function () {
 //    Route::post('detail/{id}', [AttributeController::class, 'detail'])->name('attribute.detail');
 });
 
+Route::prefix('attribute-child')->group(function () {
+    Route::get('create-child', [AttributeController::class, 'createChild'])->name('attribute.child.create');
+    Route::post('store-child', [AttributeController::class, 'storeChild'])->name('attribute.child.store');
+    Route::get('detail', [AttributeController::class, 'detailChild'])->name('attribute.child.detail');
+});
+
 Route::prefix('product')->group(function () {
     Route::get('create', [ProductController::class, 'create'])->name('product.create');
     Route::post('store', [ProductController::class, 'store'])->name('product.store');

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('attribute_list', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('attribute_id')->constrained('attributes')->cascadeOnDelete();
+            $table->foreignId('attribute_id')->nullable()->constrained('attributes')->cascadeOnDelete();
+            $table->foreignId('attributeChild_id')->nullable()->constrained('attribute_child')->cascadeOnDelete();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
         });
     }

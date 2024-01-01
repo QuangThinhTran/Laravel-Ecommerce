@@ -6,13 +6,42 @@
 @endif
 <h4> Share yours ideas </h4>
 <div class="row">
-    <form action="{{ route('attribute.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('attribute.child.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label>Name :</label>
             <input type="text" name="name">
         </div>
         @error('name')
+        <div style="color:red;">{{ $message }}</div>
+        <br>
+        @enderror
+        <div class="mb-3 d-flex flex-column">
+            <label>Description :</label>
+            <textarea cols="10" rows="3" name="description"></textarea>
+        </div>
+        @error('description')
+        <div style="color:red;">{{ $message }}</div>
+        <br>
+        @enderror
+        <div class="mb-3">
+            <label>Price :</label>
+            <input type="number" name="price">
+        </div>
+        @error('price')
+        <div style="color:red;">{{ $message }}</div>
+        <br>
+        @enderror
+        <div class="mb-3" style="display: flex; gap: 25px; align-items: center">
+            <label>Attribute</label>
+            <select class="form-select" name="attribute_id" style="width: fit-content">
+                <option selected value="">Choose attribute</option>
+                @foreach($attributes as $attribute)
+                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        @error('attribute_id')
         <div style="color:red;">{{ $message }}</div>
         <br>
         @enderror

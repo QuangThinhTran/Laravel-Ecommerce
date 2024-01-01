@@ -12,7 +12,7 @@ class RedirectController extends Controller
      * */
     public function register(): View
     {
-        return view('register');
+        return view('auth.register');
     }
 
     /**
@@ -21,7 +21,7 @@ class RedirectController extends Controller
      * */
     public function login(): View
     {
-        return view('login');
+        return view('auth.login');
     }
 
     /**

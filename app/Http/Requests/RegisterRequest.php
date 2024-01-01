@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class RegisterRequest extends FormRequest
 {
@@ -28,6 +29,14 @@ class RegisterRequest extends FormRequest
             'email' => 'required | email | unique:users', //unique email
             'password' => 'required | min:6',
             'password_confirm' => 'required | same:password'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'username.unique' => "The username {$this->input('username')} field is required.",
+            'email.unique' => "The email {$this->input('email')} field is required."
         ];
     }
 }

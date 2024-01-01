@@ -49,11 +49,28 @@ class PivotService
      * @param array $attributes
      * @return void
      * */
-    public function removeAttributesProduct($id, array $attributes): void
+    public function removeAttributesProduct($id, array $attributes, array $attributesChild): void
     {
         $product = $this->productRepository->find($id);
-        foreach ($attributes as $attribute) {
-            $product->attributes()->detach($attribute);
+
+        foreach ($attributes as $index => $attribute) {
+            $attributeChild = $attributesChild[$index] ?? null;
+
+            $product->attributes()->detach($attribute, $attributeChild);
+        }
+    }
+
+    /**
+     * Attach AttributesChild to Product
+     * @param $id
+     * @param array $attributesChild
+     * @return void
+     * */
+    public function addAttributesChildProduct($id, array $attributesChild):void
+    {
+        $product = $this->productRepository->find($id);
+        foreach ($attributesChild as $attributeChild) {
+            $product->attributesChild()->attach($attributeChild);
         }
     }
 }

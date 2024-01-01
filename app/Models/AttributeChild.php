@@ -14,7 +14,8 @@ class AttributeChild extends Model
     protected $fillable = [
         'name',
         'description',
-        'price'
+        'price',
+        'attribute_id'
     ];
 
     public function attribute(): BelongsTo

@@ -50,7 +50,7 @@
                            href="{{ route('attribute.create') }}">Attribute</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('attribute.create') }}">Attribute
+                        <a class="nav-link active" aria-current="page" href="{{ route('attribute.child.create') }}">Attribute
                             Child</a>
                     </li>
                     <li class="nav-item">

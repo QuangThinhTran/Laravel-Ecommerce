@@ -31,7 +31,7 @@ trait Util
      * @param $product_id
      * @return null| bool
      * */
-    public function uploadImages(Request $request, $product_id): null|bool
+    public function uploadImages(Request $request, $product_id)
     {
         if (!$request->file()) {
             return false;
@@ -46,5 +46,6 @@ trait Util
                 'product_id' => $product_id
             ]);
         }
+        return true;
     }
 }
