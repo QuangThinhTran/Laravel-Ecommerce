@@ -30,8 +30,8 @@ class HomeController extends Controller
     public function index(): View | JsonResponse
     {
         try {
-            $posts = $this->postRepository->index();
-            $users = $this->userRepository->index();
+            $posts = $this->postRepository->all();
+            $users = $this->userRepository->all();
             return view('index', compact('posts', 'users'));
         } catch (\Exception $e) {
             return response()->json([

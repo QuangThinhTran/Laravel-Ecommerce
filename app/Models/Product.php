@@ -51,14 +51,6 @@ class Product extends Model
     }
 
     /**
-     * Get attributes by Product
-     * */
-    public function attributes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
-    {
-        return $this->belongsToMany(Attribute::class, 'attribute_list', 'product_id', 'attribute_id');
-    }
-
-    /**
      * Get attributes child by Product
      * */
     public function attributesChild(): \Illuminate\Database\Eloquent\Relations\BelongsToMany

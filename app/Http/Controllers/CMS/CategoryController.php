@@ -33,7 +33,7 @@ class CategoryController extends Controller
     {
         try {
             $categories = $this->categoryRepository->all();
-            $products = $this->productRepository->index();
+            $products = $this->productRepository->getProductByUser();
 
             return view('products.list', compact('categories', 'products'));
         } catch (\Exception $e) {
@@ -53,10 +53,7 @@ class CategoryController extends Controller
     {
         try {
             $input = $request->all();
-            $product = $this->categoryRepository->create($input);
-            if (empty($product)) {
-                return back()->with('infor', 'Not found');
-            }
+            $this->categoryRepository->create($input);
             return redirect()->route('home.index');
         } catch (\Exception $e) {
             return response()->json([

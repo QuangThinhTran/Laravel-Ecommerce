@@ -13,19 +13,20 @@ class AttributesSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             DB::table('attributes')->insert([
                 'name' => fake()->unique()->name(),
-                'user_id' => rand(2,10)
+                'user_id' => rand(2, 13)
             ]);
         }
-//        for ($i = 1; $i <= 20; $i++) {
-//            DB::table('attribute_child')->insert([
-//                'name' => fake()->unique()->name(),
-//                'description' => fake()->text(),
-//                'price' => fake()->numerify(),
-//                'attribute_id' => rand(1,6)
-//            ]);
-//        }
+
+        for ($i = 1; $i <= 40; $i++) {
+            DB::table('attribute_child')->insert([
+                'name' => fake()->unique()->name(),
+                'description' => fake()->text(),
+                'price' => fake()->numerify(),
+                'attribute_id' => rand(1, 6)
+            ]);
+        }
     }
 }

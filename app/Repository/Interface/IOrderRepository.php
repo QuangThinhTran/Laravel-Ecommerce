@@ -4,7 +4,7 @@ namespace App\Repository\Interface;
 
 interface IOrderRepository
 {
-    public function index();
+    public function all();
 
     public function create(array $data);
 

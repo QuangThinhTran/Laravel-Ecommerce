@@ -14,7 +14,7 @@ class PostRepository implements IPostRepository
      * Get list Posts and paginate
      * @return LengthAwarePaginator
      * */
-    public function index()
+    public function all(): LengthAwarePaginator
     {
         return Post::with('user', 'products', 'comments.user',
             'comments.childComments.user')->orderByDesc('id')->paginate(5);

@@ -11,12 +11,20 @@ use Illuminate\Database\Eloquent\Model;
 class ProductRepository implements IProductRepository
 {
     /**
+     * Get all products
+     * @return LengthAwarePaginator
+     */
+    public function all(): LengthAwarePaginator
+    {
+        return Product::with('category', 'user', 'images', 'post', 'attributesChild.attribute')->orderByDesc('id')->paginate(10);
+    }
+    /**
      * Get list Products by User id and paginate
      * @return LengthAwarePaginator
      * */
-    public function index(): LengthAwarePaginator
+    public function getProductByUser(): LengthAwarePaginator
     {
-        return Product::with('category', 'user', 'images', 'post', 'attributes', 'attributesChild.attribute')->where('user_id',
+        return Product::with('category', 'user', 'images', 'post', 'attributesChild.attribute')->where('user_id',
             auth()->id())->orderByDesc('id')->paginate(10);
     }
 

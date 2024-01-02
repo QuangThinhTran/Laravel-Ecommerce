@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class AuthController extends Controller
@@ -54,9 +55,9 @@ class AuthController extends Controller
     /**
      * Login account
      * @param LoginRequest $request
-     * @return  RedirectResponse | JsonResponse
+     * @return  RedirectResponse | JsonResponse | View
      * */
-    public function login(LoginRequest $request): RedirectResponse|JsonResponse
+    public function login(LoginRequest $request): RedirectResponse|JsonResponse|View
     {
         try {
             $input = $request->all();
@@ -67,11 +68,16 @@ class AuthController extends Controller
                 return back()->with('failed', 'Login Failed');
             }
 
-            if (Auth::user()['role_id'] == Constant::ROLE_ADMIN) {
+            $user = auth::user();
+            if ($user['role_id'] == Constant::ROLE_ADMIN) {
                 return redirect()->route('dashboard.index');
+            } else if ($user['role_id'] == Constant::ROLE_MERCHANT) {
+                return redirect()->route('merchant.employees');
+            } else if ($user['role_id'] == Constant::ROLE_EMPLOYEE) {
+                return redirect()->route('merchant.employees');
+            } else {
+                return redirect()->route('customer.index', compact('user'));
             }
-            return redirect()->route('home.index', compact('user'));
-
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,

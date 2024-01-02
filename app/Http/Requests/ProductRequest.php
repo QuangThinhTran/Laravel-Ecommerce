@@ -29,7 +29,13 @@ class ProductRequest extends FormRequest
             'category_id' => 'required',
             'user_id' => 'required',
             'path' => 'required'
-//            'post_id' => 'required'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'code.unique' => "The '{$this->input('code')}' has already been taken."
         ];
     }
 }

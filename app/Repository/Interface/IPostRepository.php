@@ -3,7 +3,7 @@ namespace App\Repository\Interface;
 
 interface IPostRepository
 {
-    public function index();
+    public function all();
     public function create(array $data);
     public function detail($id);
     public function update($id, array $data);

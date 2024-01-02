@@ -5,7 +5,6 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttributeChildRequest;
 use App\Http\Requests\AttributeRequest;
-use App\Models\AttributeChild;
 use App\Repository\Interface\IAttributeChildRepository;
 use App\Repository\Interface\IAttributeRepository;
 use Illuminate\Contracts\View\View;
@@ -35,7 +34,7 @@ class AttributeController extends Controller
     public function create(): View|JsonResponse
     {
         try {
-            $attributes = $this->attributeRepository->index();
+            $attributes = $this->attributeRepository->all();
 
             return view('attributes.list', compact('attributes'));
         } catch (\Exception $e) {
@@ -74,7 +73,7 @@ class AttributeController extends Controller
     {
         try {
             $attributes_child = $this->attributeChildRepository->all();
-            $attributes = $this->attributeRepository->index();
+            $attributes = $this->attributeRepository->all();
 
             return view('attribute_child.list', compact('attributes_child', 'attributes'));
         } catch (\Exception $e) {
@@ -105,12 +104,16 @@ class AttributeController extends Controller
         }
     }
 
-    public function detailChild(Request $request)
+    /**
+     * Detail Attribute Child
+     * @param Request $request
+     * @return View
+     * */
+    public function detailChild(Request $request): View
     {
         $selectedAttributeIds = $request->input('attributes');
-        $attributes_child= [];
-        foreach ($selectedAttributeIds as $selectedAttribute)
-        {
+        $attributes_child = [];
+        foreach ($selectedAttributeIds as $selectedAttribute) {
             $attributes_child[] = $this->attributeChildRepository->find($selectedAttribute);
         }
         return view('products.child-view', compact('attributes_child'));

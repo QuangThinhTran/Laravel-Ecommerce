@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static where(string $string, $id)
+ * @method static create(array $data)
+ */
 class AttributeChild extends Model
 {
     use HasFactory;

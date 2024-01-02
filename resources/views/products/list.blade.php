@@ -3,7 +3,9 @@
     <div class="container py-4">
         <div class="row" style="justify-content: center">
             <div class="col-6">
-                @include('products.create')
+                @if(Auth::user()->role_id != 4)
+                    @include('products.create')
+                @endif
                 <hr>
                 <h1>Products list</h1>
                 <div class="mt-3">
@@ -58,18 +60,18 @@
                                     </div>
                                 </div>
 
-{{--                                @if(!is_null($product->attributes))--}}
-{{--                                    <hr>--}}
-{{--                                    Attribute--}}
-{{--                                    @foreach($product->attributes as $attribute)--}}
-{{--                                        <div class="d-flex justify-content-between mt-3">--}}
-{{--                                            <div>--}}
-{{--                                                <span> Name :</span>--}}
-{{--                                                <span class="fs-6 fw-light text-muted"> {{ $attribute->name }} </span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
+                                {{--                                @if(!is_null($product->attributes))--}}
+                                {{--                                    <hr>--}}
+                                {{--                                    Attribute--}}
+                                {{--                                    @foreach($product->attributes as $attribute)--}}
+                                {{--                                        <div class="d-flex justify-content-between mt-3">--}}
+                                {{--                                            <div>--}}
+                                {{--                                                <span> Name :</span>--}}
+                                {{--                                                <span class="fs-6 fw-light text-muted"> {{ $attribute->name }} </span>--}}
+                                {{--                                            </div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    @endforeach--}}
+                                {{--                                @endif--}}
                                 @if(!is_null($product->attributesChild))
                                     <hr>
                                     Attribute Child

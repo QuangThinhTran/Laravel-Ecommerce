@@ -62,32 +62,23 @@ class User extends Authenticatable
     }
 
     /**
-     * Get list User follow
+     * Get list employees of User
      * @return BelongsToMany
      */
-    public function followings(): BelongsToMany
+    public function employees(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'employees', 'user_id', 'employee_id');
     }
 
-    /**
-     * Get list follower of User
-     * @return BelongsToMany
-     */
-    public function followers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
-    }
-
-    /**
-     * @param User $user
-     * @return bool
-     * @property mixed $id
-     */
-    public function follows(User $user): bool
-    {
-        return $this->followings()->where('follower_id', $user->id)->exists();
-    }
+//
+//    /**
+//     * Get list follower of User
+//     * @return BelongsToMany
+//     */
+//    public function employees(): BelongsToMany
+//    {
+//        return $this->belongsToMany(User::class, 'employees', 'follower_id', 'user_id');
+//    }
 
     public function scopeSearch($query)
     {

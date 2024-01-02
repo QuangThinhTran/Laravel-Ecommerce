@@ -35,8 +35,8 @@ class RegisterRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.unique' => "The username {$this->input('username')} field is required.",
-            'email.unique' => "The email {$this->input('email')} field is required."
+            'username.unique' => "The '{$this->input('username')}' has already been taken.",
+            'email.unique' => "The '{$this->input('email')}' has already been taken."
         ];
     }
 }

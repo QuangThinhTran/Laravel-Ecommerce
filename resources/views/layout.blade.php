@@ -40,23 +40,12 @@
             @endif
         </div>
         <div id="navbarNav">
-            @if(Auth::check())
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('product.create') }}">Product</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"
-                           href="{{ route('attribute.create') }}">Attribute</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('attribute.child.create') }}">Attribute
-                            Child</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('auth.logout') }}" class="nav-link active" aria-current="page">Logout</a>
-                    </li>
-                </ul>
+            @if(Auth::check() && Auth::user()->role_id == 2)
+                @include('merchants.navbar')
+            @elseif(Auth::check() && Auth::user()->role_id == 3)
+                @include('employees.navbar')
+            @elseif(Auth::check() && Auth::user()->role_id == 4)
+                @include('customers.navbar')
             @else
                 <ul class="navbar-nav">
                     <li class="nav-item">

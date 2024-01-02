@@ -5,20 +5,46 @@ namespace App\Repository;
 use App\Models\User;
 use App\Repository\Interface\IUserRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Ramsey\Collection\Collection;
 
 class UserRepository implements IUserRepository
 {
     /**
-     * Get list Users
+     * Get all Users
      * @return LengthAwarePaginator
-     * */
-    public function index(): LengthAwarePaginator
+     */
+    public function all(): LengthAwarePaginator
     {
         return User::with('role', 'carts', 'comments', 'posts', 'attributes')->paginate(10);
+    }
+
+    /**
+     * Find Users by action
+     * @param $action // column want find
+     * @param $data // data of column want find
+     * @return LengthAwarePaginator
+     */
+    public function getUserByAction($action, $data): LengthAwarePaginator
+    {
+        return User::with('role', 'carts', 'comments', 'posts', 'attributes')
+            ->where($action, $data)->paginate(10);
+    }
+
+    /**
+     * Get employees by merchant
+     * @return LengthAwarePaginator|null
+     */
+    public function getUserByMerchant(): LengthAwarePaginator|null
+    {
+        $auth = auth()->user();
+
+        if ($auth instanceof User) {
+            return $auth->employees()->paginate(10);
+        }
+        return null;
     }
 
     /**
@@ -62,7 +88,7 @@ class UserRepository implements IUserRepository
      * */
     public function find($id): Model|Collection
     {
-        return User::with('posts')->find($id);
+        return User::with('posts')->findOrFail($id);
     }
 
     /**

@@ -70,12 +70,12 @@
         @enderror
         <div class="mb-3 d-flex flex gap-3 align-items-center">
             <label>Attribute :</label>
-{{--            <select class="form-select" name="category_id" id="attributeSelect" style="width: fit-content">--}}
-{{--                <option selected value="">Choose Attribute</option>--}}
-{{--                @foreach($attributes as $attribute)--}}
-{{--                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
+            {{--            <select class="form-select" name="category_id" id="attributeSelect" style="width: fit-content">--}}
+            {{--                <option selected value="">Choose Attribute</option>--}}
+            {{--                @foreach($attributes as $attribute)--}}
+            {{--                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>--}}
+            {{--                @endforeach--}}
+            {{--            </select>--}}
             <div class="d-flex gap-3 align-items-center">
                 @foreach($attributes as $attribute)
                     <input type="checkbox" name="attribute[]" class="attribute-checkbox"
@@ -108,7 +108,7 @@
                 $.ajax({
                     url: '/attribute-child/detail', // Replace with your route or endpoint to load the child view for multiple attributes
                     method: 'GET',
-                    data: { attributes: selectedAttributes },
+                    data: {attributes: selectedAttributes},
                     success: function (data) {
                         $('#attributeChildView').append('<div>' + data + '</div>');
                         $('#attributeChildView').show();

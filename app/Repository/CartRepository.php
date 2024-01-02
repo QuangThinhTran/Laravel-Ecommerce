@@ -2,12 +2,12 @@
 
 namespace App\Repository;
 
+use App\Constant;
 use App\Models\Cart;
 use App\Repository\Interface\ICartRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CartRepository implements ICartRepository
 {
@@ -15,9 +15,9 @@ class CartRepository implements ICartRepository
      * Get list Cart and paginate
      * @return LengthAwarePaginator
      * */
-    public function index(): LengthAwarePaginator
+    public function all(): LengthAwarePaginator
     {
-        return Cart::with('detail')->orderByDesc('id')->paginate(10);
+        return Cart::with('listProducts.attributesChild')->where('is_active', Constant::CART_INACTIVE)->orderByDesc('id')->paginate(10);
     }
 
     /**
@@ -37,18 +37,31 @@ class CartRepository implements ICartRepository
      * */
     public function detail($id): Model|Collection
     {
-        return Cart::with('detail')->findOrFail($id);
+        return Cart::with('user', 'listProducts.attributesChild')->findOrFail($id);
     }
 
     /**
-     * Get list Cart and paginate
+     * Update Cart
      * @param $id
      * @param array $data
      * @return bool
      * */
     public function update($id, array $data): bool
     {
-        return Cart::with('detail')->findOrFail($id)->update($data);
+        return Cart::with('listProducts')->findOrFail($id)->update($data);
+    }
+
+    /**
+     * Update status Cart
+     * @param $id
+     * @param $active
+     * @return bool
+     */
+    public function updateStatus($id, $active): bool
+    {
+        return Cart::with('listProducts')->findOrFail($id)->update([
+            'is_active' => $active
+        ]);
     }
 
     /**
@@ -58,7 +71,7 @@ class CartRepository implements ICartRepository
      * */
     public function delete($id): bool|null
     {
-        return Cart::with('detail')->findOrFail($id)->delete();
+        return Cart::with('listProducts')->findOrFail($id)->delete();
     }
 
     /**
@@ -66,8 +79,8 @@ class CartRepository implements ICartRepository
      * @param $id
      * @return bool|int
      * */
-    public function restore($id)
+    public function restore($id): bool|int
     {
-        return Cart::with('detail')->findOrFail($id)->withTrashed()->restore();
+        return Cart::with('listProducts')->findOrFail($id)->withTrashed()->restore();
     }
 }

@@ -1,15 +1,18 @@
 <?php
+
 namespace App\Repository\Interface;
 
 interface ICartRepository
 {
-    public function index();
+    public function all();
 
     public function create(array $data);
 
     public function detail($id);
 
     public function update($id, array $data);
+
+    public function updateStatus($id, $active);
 
     public function delete($id);
 

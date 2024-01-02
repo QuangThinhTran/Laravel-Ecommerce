@@ -13,14 +13,14 @@ class ProductsSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 12; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             DB::table('products')->insert([
                 'name' => fake()->name(),
                 'code' => fake()->unique()->currencyCode(),
                 'price' => fake()->numerify(),
                 'description' => fake()->text(),
                 'category_id' => rand(1, 4),
-                'user_id' => rand(2, 6),
+                'user_id' => rand(2, 14),
                 'post_id' => rand(1, 12)
             ]);
         }

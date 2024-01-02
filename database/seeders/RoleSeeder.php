@@ -14,7 +14,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             switch ($i) {
                 case Constant::ROLE_ADMIN:
                     DB::table('role')->insert([
@@ -26,9 +26,14 @@ class RoleSeeder extends Seeder
                         'name' => 'merchant',
                     ]);
                     break;
-                case Constant::ROLE_USER:
+                case Constant::ROLE_EMPLOYEE:
                     DB::table('role')->insert([
-                        'name' => 'user',
+                        'name' => 'employee',
+                    ]);
+                    break;
+                case Constant::ROLE_CUSTOMER:
+                    DB::table('role')->insert([
+                        'name' => 'customer',
                     ]);
             }
         }

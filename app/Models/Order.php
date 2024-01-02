@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Order extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $table = 'orders';
     protected $fillable = [
@@ -32,7 +32,7 @@ class Order extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(Cart::class);
+        return $this->belongsTo(User::class);
     }
 
     public function status(): BelongsTo

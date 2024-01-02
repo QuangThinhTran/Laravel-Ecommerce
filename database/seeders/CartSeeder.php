@@ -6,17 +6,18 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ImagesSeeder extends Seeder
+class CartSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 40; $i++) {
-            DB::table('images')->insert([
-                'path' => 'image-' . rand(1, 20) . '.jpg',
-                'product_id' => rand(1, 20)
+        for ($i = 1; $i <= 30; $i++) {
+            DB::table('carts')->insert([
+                'total' => fake()->numerify(),
+                'is_active' => 0,
+                'user_id' => rand(15, 30)
             ]);
         }
     }

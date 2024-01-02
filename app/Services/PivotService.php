@@ -2,62 +2,52 @@
 
 namespace App\Services;
 
-use App\Models\Attribute;
-use App\Models\Product;
-use App\Repository\Interface\IAttributeRepository;
+use App\Models\User;
+use App\Repository\Interface\ICartRepository;
 use App\Repository\Interface\ICommentRepository;
-use App\Repository\Interface\IPostRepository;
 use App\Repository\Interface\IProductRepository;
+use Illuminate\Http\RedirectResponse;
 
 class PivotService
 {
-    protected IPostRepository $postRepository;
     protected IProductRepository $productRepository;
     protected ICommentRepository $commentRepository;
-    protected IAttributeRepository $attributeRepository;
+    protected ICartRepository $cartRepository;
 
     public function __construct
     (
-        IPostRepository $postRepository,
         IProductRepository $productRepository,
         ICommentRepository $commentRepository,
-        IAttributeRepository $attributeRepository
+        ICartRepository $cartRepository
     ) {
-        $this->postRepository = $postRepository;
         $this->productRepository = $productRepository;
         $this->commentRepository = $commentRepository;
-        $this->attributeRepository = $attributeRepository;
+        $this->cartRepository = $cartRepository;
     }
 
     /**
-     * Attach Attributes to Product
-     * @param $id
-     * @param array $attributes
+     * Feature follow user
+     * @param User $user
      * @return void
      * */
-    public function addAttributesProduct($id, array $attributes): void
+    public function addEmployee(User $user): void
     {
-        $product = $this->productRepository->find($id);
-        foreach ($attributes as $attribute) {
-            $product->attributes()->attach($attribute);
+        $merchant = auth()->user();
+        if ($merchant instanceof User) {
+            $merchant->employees()->attach($user);
         }
     }
 
     /**
-     * Detach Attributes to Product
-     * @param $id
-     * @param array $attributes
+     * Feature unfollow user
+     * @param User $user
      * @return void
      * */
-    public function removeAttributesProduct($id, array $attributes, array $attributesChild): void
+    public function unfollow(User $user)
     {
-        $product = $this->productRepository->find($id);
-
-        foreach ($attributes as $index => $attribute) {
-            $attributeChild = $attributesChild[$index] ?? null;
-
-            $product->attributes()->detach($attribute, $attributeChild);
-        }
+//        $follower = auth()->user();
+//        $follower->followings()->detach($user);
+//        return back();
     }
 
     /**
@@ -66,11 +56,25 @@ class PivotService
      * @param array $attributesChild
      * @return void
      * */
-    public function addAttributesChildProduct($id, array $attributesChild):void
+    public function addAttributesChildProduct($id, array $attributesChild): void
     {
         $product = $this->productRepository->find($id);
         foreach ($attributesChild as $attributeChild) {
             $product->attributesChild()->attach($attributeChild);
+        }
+    }
+
+    /**
+     * Attach Products to Cart
+     * @param $id
+     * @param array $products
+     * @return void
+     * */
+    public function addProductsToCart($id, array $products): void
+    {
+        $carts = $this->cartRepository->detail($id);
+        foreach ($products as $product) {
+            $carts->listProducts()->attach($product);
         }
     }
 }

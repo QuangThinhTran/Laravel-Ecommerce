@@ -1,18 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\RedirectController;
-use App\Http\Controllers\CMS\PostController;
-use App\Http\Controllers\Index\HomeController;
-use App\Http\Controllers\CMS\UserController;
-use App\Http\Controllers\CMS\CommentController;
-use App\Http\Controllers\CMS\SearchController;
-use App\Http\Controllers\Index\DashboardController;
-use App\Http\Controllers\CMS\PivotTableController;
-use App\Http\Controllers\CMS\ProductController;
-use App\Http\Controllers\CMS\CategoryController;
 use App\Http\Controllers\CMS\AttributeController;
+use App\Http\Controllers\CMS\CartController;
+use App\Http\Controllers\CMS\CategoryController;
+use App\Http\Controllers\CMS\CommentController;
+use App\Http\Controllers\CMS\OrderController;
+use App\Http\Controllers\CMS\PostController;
+use App\Http\Controllers\CMS\ProductController;
+use App\Http\Controllers\CMS\SearchController;
+use App\Http\Controllers\CMS\UserController;
+use App\Http\Controllers\Index\DashboardController;
+use App\Http\Controllers\Index\HomeController;
+use App\Http\Controllers\Index\MerchantController;
+use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\Index\CustomerController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,12 +77,31 @@ Route::prefix('product')->group(function () {
     Route::get('restore/{id}', [ProductController::class, 'restore'])->name('product.restore');
 });
 
+Route::prefix('cart')->group(function () {
+    Route::get('create', [CartController::class, 'create'])->name('cart.create');
+    Route::post('store', [CartController::class, 'store'])->name('cart.store');
+    Route::get('detail/{id}', [CartController::class, 'detail'])->name('cart.detail');
+});
+
+Route::prefix('order')->group(function () {
+    Route::get('list', [OrderController::class, 'index'])->name('order.list');
+    Route::post('checkout', [OrderController::class, 'checkout'])->name('order.checkout');
+});
+
+Route::prefix('merchant')->group(function () {
+    Route::get('employees', [MerchantController::class, 'getEmployees'])->name('merchant.employees');
+    Route::post('add-employees', [MerchantController::class, 'createEmployees'])->name('merchant.create.employees');
+});
+
+Route::prefix('customer')->group(function () {
+    Route::get('index', [CustomerController::class, 'index'])->name('customer.index');
+    Route::get('products', [CustomerController::class, 'getProducts'])->name('customer.products');
+});
+
+
 Route::prefix('search')->group(function () {
     Route::get('/user', [SearchController::class, 'searchUserByName'])->name('search.user');
 });
-
-Route::get('follow/{user}', [PivotTableController::class, 'follow'])->name('follow');
-Route::get('unfollow/{user}', [PivotTableController::class, 'unfollow'])->name('unfollow');
 
 Route::controller(CommentController::class)->group(function () {
     Route::post('add-comment-child', 'addCommentChild')->name('comment.add.child');

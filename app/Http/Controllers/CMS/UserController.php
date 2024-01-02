@@ -4,7 +4,9 @@ namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class UserController extends Controller
 {
@@ -20,16 +22,20 @@ class UserController extends Controller
     /**
      * Get detail User
      * @param $id
-     * @return View
+     * @return View | JsonResponse
      * */
-    public function detail($id): View
+    public function detail($id): View|JsonResponse
     {
-        $user = $this->userRepository->find($id);
-        if (!$user) {
-            return view('errors.not_found');
+        try {
+            $user = $this->userRepository->find($id);
+            $paginatedPosts = $user->posts()->paginate(5);
+            $users = $this->userRepository->all();
+            return view('profile', compact('user', 'users', 'paginatedPosts'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'result' => false,
+                'message' => $e->getMessage(),
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
         }
-        $paginatedPosts = $user->posts()->paginate(5);
-        $users = $this->userRepository->index();
-        return view('profile', compact('user', 'users', 'paginatedPosts'));
     }
 }

@@ -14,7 +14,7 @@ class AttributeRepository implements IAttributeRepository
      * Get list Attributes by user id and paginate
      * @return LengthAwarePaginator
      * */
-    public function index(): LengthAwarePaginator
+    public function all(): LengthAwarePaginator
     {
         return Attribute::with('user')->where('user_id', auth()->id())->paginate(10);
     }

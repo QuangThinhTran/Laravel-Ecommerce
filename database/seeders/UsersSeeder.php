@@ -19,7 +19,7 @@ class UsersSeeder extends Seeder
                 'name' => 'admin',
                 'username' => 'admin',
                 'email' => fake()->unique()->email,
-                'password' => Hash::make('12345678'),
+                'password' => Hash::make('123456'),
                 'avatar' => 'avatar.svg',
                 'role_id' => 1
             ]);
@@ -30,20 +30,31 @@ class UsersSeeder extends Seeder
                 'name' => fake()->name,
                 'username' => fake()->unique()->userName,
                 'email' => fake()->unique()->email,
-                'password' => Hash::make('12345678'),
+                'password' => Hash::make('123456'),
                 'avatar' => 'avatar.svg',
                 'role_id' => 2
             ]);
         }
 
-        for ($i = 1; $i <= 6; $i++) {
+        for ($i = 1; $i <= 10; $i++) {
             DB::table('users')->insert([
                 'name' => fake()->name,
                 'username' => fake()->unique()->userName,
                 'email' => fake()->unique()->email,
-                'password' => Hash::make('12345678'),
+                'password' => Hash::make('123456'),
                 'avatar' => 'avatar.svg',
                 'role_id' => 3
+            ]);
+        }
+
+        for ($i = 1; $i <= 16; $i++) {
+            DB::table('users')->insert([
+                'name' => fake()->name,
+                'username' => fake()->unique()->userName,
+                'email' => fake()->unique()->email,
+                'password' => Hash::make('123456'),
+                'avatar' => 'avatar.svg',
+                'role_id' => 4
             ]);
         }
     }

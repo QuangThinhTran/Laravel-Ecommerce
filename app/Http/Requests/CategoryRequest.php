@@ -23,7 +23,14 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required | unique:category'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+          'name.unique' => "The '{$this->input('name')}' has already been taken."
         ];
     }
 }

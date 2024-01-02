@@ -4,6 +4,8 @@ namespace App\Repository;
 use App\Models\AttributeChild;
 use App\Repository\Interface\IAttributeChildRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Model;
+use Ramsey\Collection\Collection;
 
 class AttributeChildRepository implements IAttributeChildRepository
 {
@@ -20,20 +22,20 @@ class AttributeChildRepository implements IAttributeChildRepository
     /**
      * Create AttributeChild
      * @param array $data
-     * @return mixed
+     * @return Model|Collection
      */
-    public function create(array $data)
+    public function create(array $data): Model|Collection
     {
         return AttributeChild::create($data);
     }
 
     /**
-     * @param $id
+     * @param $attribute_id
      * @return mixed
      */
-    public function find($id)
+    public function find($attribute_id): mixed
     {
-        return AttributeChild::where('attribute_id', $id)->get();
+        return AttributeChild::where('attribute_id', $attribute_id)->get();
     }
 
     /**

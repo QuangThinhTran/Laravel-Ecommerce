@@ -3,7 +3,9 @@
     <div class="container py-4">
         <div class="row" style="justify-content: center">
             <div class="col-6">
-                @include('attribute_child.create')
+                @if(Auth::user()->role_id != 4)
+                    @include('attribute_child.create')
+                @endif
                 <hr>
                 <h1>Attribute list</h1>
                 <div class="mt-3">

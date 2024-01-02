@@ -23,7 +23,7 @@ class DashboardController extends Controller
      * */
     public function index()
     {
-        $posts = $this->postRepository->index();
+        $posts = $this->postRepository->all();
 
         return view('dashboard.index', compact('posts'));
     }

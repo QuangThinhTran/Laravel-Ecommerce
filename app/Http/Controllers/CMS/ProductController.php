@@ -51,8 +51,8 @@ class ProductController extends Controller
     {
         try {
             $categories = $this->categoryRepository->all();
-            $products = $this->productRepository->index();
-            $attributes = $this->attributeRepository->index();
+            $products = $this->productRepository->getProductByUser();
+            $attributes = $this->attributeRepository->all();
             return view('products.list', compact('categories', 'products', 'attributes'));
         } catch (\Exception $e) {
             return response()->json([
@@ -74,7 +74,6 @@ class ProductController extends Controller
             $input = $request->all();
             $product = $this->productRepository->create($input);
             self::uploadImages($request, $product['id']);
-            $this->pivotService->addAttributesProduct($product['id'], $input['attribute']);
             $this->pivotService->addAttributesChildProduct($product['id'], $input['attribute_child']);
             DB::commit();
             return back()->with('infor', 'Product created Successfully');

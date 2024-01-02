@@ -3,7 +3,8 @@ namespace App\Repository\Interface;
 
 interface IProductRepository
 {
-    public function index();
+    public function all();
+    public function getProductByUser();
     public function getProductByActive($active);
     public function create(array $data);
     public function find($id);

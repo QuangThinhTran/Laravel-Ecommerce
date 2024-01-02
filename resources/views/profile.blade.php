@@ -107,7 +107,6 @@
                     {{ $paginatedPosts->links('vendor.pagination.bootstrap-4')}}
                 @endif
             </div>
-            @include('list-user')
         </div>
     </div>
 @endsection
