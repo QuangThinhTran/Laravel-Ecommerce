@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequest;
 use App\Http\Requests\ProductRequest;
 use App\Repository\Interface\ITermRepository;
 use App\Repository\Interface\IAttributeRepository;
@@ -11,7 +10,6 @@ use App\Repository\Interface\ICategoryRepository;
 use App\Repository\Interface\IProductRepository;
 use App\Services\ItemService;
 use App\Services\PivotService;
-use App\Services\TermService;
 use App\Util;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

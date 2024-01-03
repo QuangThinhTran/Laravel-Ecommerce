@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Repository\Interface\IOrderRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,7 +17,7 @@ class OrderRepository implements IOrderRepository
      * */
     public function all(): LengthAwarePaginator
     {
-        return Order::with('user', 'status')->orderByDesc('id')->paginate(10);
+        return Order::with('customer', 'merchant', 'status', 'orderDetail')->orderByDesc('id')->paginate(10);
     }
 
     /**
@@ -27,7 +28,7 @@ class OrderRepository implements IOrderRepository
      * */
     public function getOrderByAction($action, $data): LengthAwarePaginator
     {
-        return Order::with('user', 'status')->where($action, $data)->orderByDesc('id')->paginate(10);
+        return Order::with('customer', 'merchant', 'status')->where($action, $data)->orderByDesc('id')->paginate(10);
     }
 
     /**
@@ -47,11 +48,11 @@ class OrderRepository implements IOrderRepository
      * */
     public function detail($id): Model|Collection
     {
-        return Order::with('cart', 'user', 'status')->findOrFail($id);
+        return Order::with('status')->findOrFail($id);
     }
 
     /**
-     * Detail Order
+     * Update Order
      * @param $id
      * @param array $data
      * @return bool
@@ -79,5 +80,15 @@ class OrderRepository implements IOrderRepository
     public function restore($id): bool
     {
         return Order::with('cart', 'user', 'status')->findOrFail($id)->withTrashed()->restore();
+    }
+
+    /**
+     * Create detail Order
+     * @param array $data
+     * @return Model|Collection
+     * */
+    public function createOrderDetail(array $data): Model|Collection
+    {
+        return OrderDetail::create($data);
     }
 }

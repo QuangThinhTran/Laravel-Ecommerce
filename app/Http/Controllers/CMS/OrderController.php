@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Repository\Interface\ICartRepository;
 use App\Repository\Interface\IOrderRepository;
+use App\Services\ItemService;
 use App\Services\PivotService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
@@ -18,16 +19,19 @@ class OrderController extends Controller
     protected ICartRepository $cartRepository;
     protected IOrderRepository $orderRepository;
     protected PivotService $pivotService;
+    protected ItemService $itemService;
 
     public function __construct
     (
         ICartRepository $cartRepository,
         IOrderRepository $orderRepository,
-        PivotService $pivotService
+        PivotService $pivotService,
+        ItemService $itemService
     ) {
         $this->cartRepository = $cartRepository;
         $this->orderRepository = $orderRepository;
         $this->pivotService = $pivotService;
+        $this->itemService = $itemService;
     }
 
     /**
@@ -57,10 +61,16 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $input = $request->all();
-            dd($input);
+
+            $products_code = $this->itemService->getArrayItems($input['products_code']);
+            $products_name = $this->itemService->getArrayItems($input['products_name']);
+            $products_price = $this->itemService->getArrayItems($input['products_price']);
+            $products_quantity = $this->itemService->getArrayItems($input['products_quantity']);
+
             $order = $this->orderRepository->create($input);
             $this->cartRepository->updateStatus($input['cart_id'], $input['active']);
-            $this->pivotService->addProductsToOrder($order['id'], $input['products']);
+            $this->pivotService->addProductsToOrder($order['id'], $products_code, $products_name, $products_price,
+                $products_quantity);
             DB::commit();
 
             return redirect()->route('order.list');

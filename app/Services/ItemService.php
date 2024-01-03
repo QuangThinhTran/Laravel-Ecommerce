@@ -4,6 +4,11 @@ namespace App\Services;
 
 class ItemService
 {
+    /**
+     * Filter items of Items != null and return array_values
+     * @param array $items
+     * @return array
+     * */
     public function getArrayItems(array $items): array
     {
         $data = array_filter($items, function ($item) {
@@ -13,7 +18,13 @@ class ItemService
         return array_values($data);
     }
 
-    public function countArrayItems(array $items, $result = 0)
+    /**
+     * Sum item of Items
+     * @param array $items
+     * @param int $result
+     * @return integer $result
+     */
+    public function countArrayItems(array $items, int $result = 0): int
     {
         foreach ($items as $item) {
             $result += $item;

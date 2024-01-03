@@ -49,7 +49,7 @@ class CartRepository implements ICartRepository
      * */
     public function detail($id): Model|Collection
     {
-        return Cart::with('user', 'listProducts.terms')->findOrFail($id);
+        return Cart::with('user', 'listProducts.terms', 'cartDetail')->findOrFail($id);
     }
 
     /**

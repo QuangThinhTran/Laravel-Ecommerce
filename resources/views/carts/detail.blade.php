@@ -63,10 +63,17 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            @if(!is_null($product->terms))
-                                                <hr>
-                                                Term
+                                            <hr>
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <span> Quantity :</span>
+                                                    <span class="fs-6 fw-light text-muted"> {{ $product->pivot->quantity }} </span>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            @if(!empty($product->terms))
                                                 @foreach($product->terms as $term)
+                                                    Term
                                                     <div class="d-flex justify-content-between mt-3">
                                                         <div>
                                                             <span> Name :</span>
@@ -109,11 +116,16 @@
                                         <input type="text" value="{{ $product->user->name }}" name="merchant_name">
                                         <input type="text" value="{{ $product->user->email }}" name="merchant_email">
                                         <input type="text" value="{{ $product->user->id }}" name="merchant_id">
-                                        <input type="text" value="{{ $product->id }}" name="products_id[]">
+                                        <input type="text" value="{{ $product->code }}" name="products_code[]">
+                                        <input type="text" value="{{ $product->name }}" name="products_name[]">
+                                        <input type="text" value="{{ $product->price }}" name="products_price[]">
+                                        <input type="text" value="{{ $product->pivot->quantity }}" name="products_quantity[]">
                                     @endforeach
+                                    <input type="text" name="quantity" value="{{ $cart->quantity }}">
                                     <input type="text" name="total" value="{{ $cart->total }}">
                                     <input type="text" name="active" value="1">
                                     <input type="text" name="status_id" value="4">
+                                    <input type="text" name="cart_id" value="{{ $cart->id }}">
                                     <div class="d-flex align-items-center gap-3">
                                         <button type="submit" style="color: green;background: none;border: none">
                                             Payment

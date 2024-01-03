@@ -77,14 +77,27 @@ class PivotService
     /**
      * Attach data Products to Order
      * @param $id
-     * @param array $products
+     * @param array $products_code
+     * @param array $products_name
+     * @param array $products_price
+     * @param array $products_quantity
      * @return void
-     * */
-    public function addProductsToOrder($id, array $products): void
+     */
+    public function addProductsToOrder($id, array $products_code, array $products_name, array $products_price, array $products_quantity): void
     {
         $order = $this->orderRepository->detail($id);
-        foreach ($products as $product) {
-            $order->listOrderDetail()->attach($product);
+
+        foreach ($products_code as $key => $product_code) {
+
+            $data = [
+                'order_id' => $order['id'],
+                'item_code' => $product_code,
+                'item_name' => $products_name[$key],
+                'item_price' => $products_price[$key],
+                'quantity' => $products_quantity[$key]
+            ];
+
+            $this->orderRepository->createOrderDetail($data);
         }
     }
 }

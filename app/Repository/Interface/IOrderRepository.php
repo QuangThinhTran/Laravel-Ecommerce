@@ -5,6 +5,7 @@ namespace App\Repository\Interface;
 interface IOrderRepository
 {
     public function all();
+
     public function getOrderByAction($action, $data);
 
     public function create(array $data);
@@ -16,4 +17,6 @@ interface IOrderRepository
     public function delete($id);
 
     public function restore($id);
+
+    public function createOrderDetail(array $data);
 }
