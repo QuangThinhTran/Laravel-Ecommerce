@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->boolean('is_active')->default(0);
 
-            $table->foreignId('category_id')->constrained('category')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('post_id')->nullable()->constrained('posts')->cascadeOnDelete();
 

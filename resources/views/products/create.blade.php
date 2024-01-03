@@ -68,6 +68,18 @@
         <div style="color:red;">{{ $message }}</div>
         <br>
         @enderror
+        <div class="mb-3" style="display: flex; gap: 25px; align-items: center">
+            <label>Status</label>
+            <select class="form-select" name="is_active" style="width: fit-content">
+                <option selected value="">Choose status</option>
+                <option value="1">Active</option>
+                <option value="0">InActive</option>
+            </select>
+        </div>
+        @error('is_active')
+        <div style="color:red;">{{ $message }}</div>
+        <br>
+        @enderror
         <div class="mb-3 d-flex flex gap-3 align-items-center">
             <label>Attribute :</label>
             {{--            <select class="form-select" name="category_id" id="attributeSelect" style="width: fit-content">--}}
@@ -84,8 +96,9 @@
             </div>
         </div>
 
-        <div class="mb-3" style="display: flex; gap: 25px; align-items: center" id="attributeChildView">
-            <label>Attribute Child</label>
+        <div class="mb-3" style="display: flex; gap: 25px; align-items: center">
+            <label>Term</label>
+            <div id="termView"></div>
         </div>
 
         <div class="">
@@ -97,32 +110,33 @@
 <script>
     //Checked multiple
     $(document).ready(function () {
+        $('#termView').hide(); // Hide termView initially
+
         $('.attribute-checkbox').change(function () {
             var selectedAttributes = [];
 
             $('.attribute-checkbox:checked').each(function () {
                 selectedAttributes.push($(this).val());
             });
+
             if (selectedAttributes.length > 0) {
-                // Load child view based on selected attributes
                 $.ajax({
-                    url: '/attribute-child/detail', // Replace with your route or endpoint to load the child view for multiple attributes
+                    url: '{{ route('term.detail') }}',
                     method: 'GET',
                     data: {attributes: selectedAttributes},
                     success: function (data) {
-                        $('#attributeChildView').append('<div>' + data + '</div>');
-                        $('#attributeChildView').show();
+                        $('#termView').empty().append('<div>' + data + '</div>').show();
                     },
                     error: function () {
                         console.error('Error loading child view');
                     }
                 });
             } else {
-                $('#attributeChildView').empty();
-                $('#attributeChildView').hide();
+                $('#termView').empty().hide();
             }
         });
     });
+
 
     //Checked One
     // $(document).ready(function () {

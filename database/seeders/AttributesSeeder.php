@@ -20,13 +20,12 @@ class AttributesSeeder extends Seeder
             ]);
         }
 
-        for ($i = 1; $i <= 40; $i++) {
-            DB::table('attribute_child')->insert([
-                'name' => fake()->unique()->name(),
-                'description' => fake()->text(),
-                'price' => fake()->numerify(),
-                'attribute_id' => rand(1, 6)
-            ]);
-        }
+//        for ($i = 1; $i <= 40; $i++) {
+//            DB::table('terms')->insert([
+//                'name' => fake()->unique()->name(),
+//                'description' => fake()->text(),
+//                'attribute_id' => rand(1, 6)
+//            ]);
+//        }
     }
 }

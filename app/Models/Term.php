@@ -10,15 +10,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static where(string $string, $id)
  * @method static create(array $data)
  */
-class AttributeChild extends Model
+class Term extends Model
 {
     use HasFactory;
 
-    protected $table = 'attribute_child';
+    protected $table = 'terms';
     protected $fillable = [
         'name',
         'description',
-        'price',
+        'is_active',
         'attribute_id'
     ];
 

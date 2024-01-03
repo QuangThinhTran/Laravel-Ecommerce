@@ -10,16 +10,16 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('attribute_child', function (Blueprint $table) {
+        Schema::create('order_detail', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->text('description')->nullable();
-            $table->double('price')->nullable();
+            $table->string('item_code')->nullable();
+            $table->string('item_name');
+            $table->string('item_price');
+            $table->string('quantity');
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
 
-            $table->foreignId('attribute_id')->constrained('attributes')->cascadeOnDelete();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('attribute_child');
+        Schema::dropIfExists('detail_order');
     }
 };

@@ -17,7 +17,19 @@ class CartRepository implements ICartRepository
      * */
     public function all(): LengthAwarePaginator
     {
-        return Cart::with('listProducts.attributesChild')->where('is_active', Constant::CART_INACTIVE)->orderByDesc('id')->paginate(10);
+        return Cart::with('listProducts.terms')->orderByDesc('id')->paginate(10);
+    }
+
+    /**
+     * Get list Cart by id User, status and paginate
+     * @param $id // User Id
+     * @param boolean $status
+     * @return LengthAwarePaginator
+     * */
+    public function getCartByUserIDAndStatus($id, $status): LengthAwarePaginator
+    {
+        return Cart::with('listProducts.terms')->where('user_id', $id)->where('is_active',
+            $status)->orderByDesc('id')->paginate(10);
     }
 
     /**
@@ -37,7 +49,7 @@ class CartRepository implements ICartRepository
      * */
     public function detail($id): Model|Collection
     {
-        return Cart::with('user', 'listProducts.attributesChild')->findOrFail($id);
+        return Cart::with('user', 'listProducts.terms')->findOrFail($id);
     }
 
     /**

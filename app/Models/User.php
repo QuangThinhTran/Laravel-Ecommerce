@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Attribute::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /**
      * Get list employees of User
      * @return BelongsToMany
@@ -69,16 +74,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'employees', 'user_id', 'employee_id');
     }
-
-//
-//    /**
-//     * Get list follower of User
-//     * @return BelongsToMany
-//     */
-//    public function employees(): BelongsToMany
-//    {
-//        return $this->belongsToMany(User::class, 'employees', 'follower_id', 'user_id');
-//    }
 
     public function scopeSearch($query)
     {

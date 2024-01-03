@@ -2,7 +2,7 @@
 
 namespace App\Repository\Interface;
 
-interface IAttributeChildRepository
+interface ITermRepository
 {
     public function all();
 

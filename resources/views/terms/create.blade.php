@@ -6,7 +6,7 @@
 @endif
 <h4> Share yours ideas </h4>
 <div class="row">
-    <form action="{{ route('attribute.child.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('term.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label>Name :</label>
@@ -24,14 +24,6 @@
         <div style="color:red;">{{ $message }}</div>
         <br>
         @enderror
-        <div class="mb-3">
-            <label>Price :</label>
-            <input type="number" name="price">
-        </div>
-        @error('price')
-        <div style="color:red;">{{ $message }}</div>
-        <br>
-        @enderror
         <div class="mb-3" style="display: flex; gap: 25px; align-items: center">
             <label>Attribute</label>
             <select class="form-select" name="attribute_id" style="width: fit-content">
@@ -42,6 +34,18 @@
             </select>
         </div>
         @error('attribute_id')
+        <div style="color:red;">{{ $message }}</div>
+        <br>
+        @enderror
+        <div class="mb-3" style="display: flex; gap: 25px; align-items: center">
+            <label>Status</label>
+            <select class="form-select" name="is_active" style="width: fit-content">
+                <option selected value="">Choose status</option>
+                <option value="1">Active</option>
+                <option value="0">InActive</option>
+            </select>
+        </div>
+        @error('is_active')
         <div style="color:red;">{{ $message }}</div>
         <br>
         @enderror

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\CMS;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\ProductRequest;
-use App\Repository\Interface\IAttributeChildRepository;
+use App\Repository\Interface\ITermRepository;
 use App\Repository\Interface\IAttributeRepository;
 use App\Repository\Interface\ICategoryRepository;
 use App\Repository\Interface\IProductRepository;
+use App\Services\ItemService;
 use App\Services\PivotService;
+use App\Services\TermService;
 use App\Util;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -25,22 +27,25 @@ class ProductController extends Controller
     protected ICategoryRepository $categoryRepository;
     protected IProductRepository $productRepository;
     protected IAttributeRepository $attributeRepository;
-    protected IAttributeChildRepository $attributeChildRepository;
+    protected ITermRepository $attributeChildRepository;
     protected PivotService $pivotService;
+    protected ItemService $itemService;
 
     public function __construct
     (
         ICategoryRepository $categoryRepository,
         IProductRepository $productRepository,
         IAttributeRepository $attributeRepository,
-        IAttributeChildRepository $attributeChildRepository,
-        PivotService $pivotService
+        ITermRepository $attributeChildRepository,
+        PivotService $pivotService,
+        ItemService $itemService
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
         $this->attributeRepository = $attributeRepository;
         $this->pivotService = $pivotService;
         $this->attributeChildRepository = $attributeChildRepository;
+        $this->itemService = $itemService;
     }
 
     /**
@@ -72,9 +77,13 @@ class ProductController extends Controller
         DB::beginTransaction();
         try {
             $input = $request->all();
+
             $product = $this->productRepository->create($input);
             self::uploadImages($request, $product['id']);
-            $this->pivotService->addAttributesChildProduct($product['id'], $input['attribute_child']);
+
+            $price_items = $this->itemService->getArrayItems($input['price_items']);
+            $this->pivotService->addTermToProduct($product['id'], $input['terms'], $price_items);
+
             DB::commit();
             return back()->with('infor', 'Product created Successfully');
         } catch (\Exception $e) {

@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         for ($i = 1; $i <= 12; $i++) {
-            DB::table('category')->insert([
+            DB::table('categories')->insert([
                 'name' => fake()->unique()->name(),
             ]);
         }

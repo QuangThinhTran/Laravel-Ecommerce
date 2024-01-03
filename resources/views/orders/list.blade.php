@@ -64,22 +64,22 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                @if(!is_null($product->attributesChild))
+                                                @if(!is_null($product->terms))
                                                     <hr>
-                                                    Attribute Child
-                                                    @foreach($product->attributesChild as $attribute_child)
+                                                    Terms
+                                                    @foreach($product->terms as $term)
                                                         <div class="d-flex justify-content-between mt-3">
                                                             <div>
                                                                 <span> Name :</span>
-                                                                <span class="fs-6 fw-light text-muted"> {{ $attribute_child->name }} </span>
+                                                                <span class="fs-6 fw-light text-muted"> {{ $term->name }} </span>
                                                             </div>
                                                             <div>
                                                                 <span> Price :</span>
-                                                                <span class="fs-6 fw-light text-muted"> {{ $attribute_child->price }} </span>
+                                                                <span class="fs-6 fw-light text-muted"> {{ $term->price }} </span>
                                                             </div>
                                                             <div>
                                                                 <span> Type :</span>
-                                                                <span class="fs-6 fw-light text-muted"> {{ $attribute_child->attribute->name }} </span>
+                                                                <span class="fs-6 fw-light text-muted"> {{ $term->attribute->name }} </span>
                                                             </div>
                                                         </div>
                                                     @endforeach

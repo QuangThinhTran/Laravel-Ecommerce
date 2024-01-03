@@ -19,6 +19,7 @@ class Cart extends Model
     protected $fillable = [
         'total',
         'is_active',
+        'quantity',
         'user_id'
     ];
 
@@ -29,6 +30,6 @@ class Cart extends Model
 
     public function listProducts(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'cart_detail', 'cart_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'cart_detail', 'cart_id', 'product_id')->withPivot('quantity');
     }
 }

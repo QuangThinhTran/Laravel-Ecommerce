@@ -21,7 +21,7 @@ class ProductsSeeder extends Seeder
                 'description' => fake()->text(),
                 'category_id' => rand(1, 4),
                 'user_id' => rand(2, 14),
-                'post_id' => rand(1, 12)
+                'post_id' => rand(1, 12),
             ]);
         }
     }

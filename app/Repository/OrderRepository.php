@@ -16,7 +16,18 @@ class OrderRepository implements IOrderRepository
      * */
     public function all(): LengthAwarePaginator
     {
-        return Order::with('cart.listProducts', 'user', 'status')->where('user_id', auth()->id())->orderByDesc('id')->paginate(10);
+        return Order::with('user', 'status')->orderByDesc('id')->paginate(10);
+    }
+
+    /**
+     * Get list Orders and paginate
+     * @param $action
+     * @param $data
+     * @return LengthAwarePaginator
+     * */
+    public function getOrderByAction($action, $data): LengthAwarePaginator
+    {
+        return Order::with('user', 'status')->where($action, $data)->orderByDesc('id')->paginate(10);
     }
 
     /**

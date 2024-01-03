@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Repository\Interface\ICartRepository;
 use App\Repository\Interface\IOrderRepository;
+use App\Services\PivotService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -16,14 +17,17 @@ class OrderController extends Controller
 {
     protected ICartRepository $cartRepository;
     protected IOrderRepository $orderRepository;
+    protected PivotService $pivotService;
 
     public function __construct
     (
         ICartRepository $cartRepository,
-        IOrderRepository $orderRepository
+        IOrderRepository $orderRepository,
+        PivotService $pivotService
     ) {
         $this->cartRepository = $cartRepository;
         $this->orderRepository = $orderRepository;
+        $this->pivotService = $pivotService;
     }
 
     /**
@@ -53,9 +57,12 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             $input = $request->all();
-            $this->orderRepository->create($input);
+            dd($input);
+            $order = $this->orderRepository->create($input);
             $this->cartRepository->updateStatus($input['cart_id'], $input['active']);
+            $this->pivotService->addProductsToOrder($order['id'], $input['products']);
             DB::commit();
+
             return redirect()->route('order.list');
         } catch (\Exception $e) {
             DB::rollBack();

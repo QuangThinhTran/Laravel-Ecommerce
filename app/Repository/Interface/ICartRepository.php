@@ -5,6 +5,7 @@ namespace App\Repository\Interface;
 interface ICartRepository
 {
     public function all();
+    public function getCartByUserIDAndStatus($id, $status);
 
     public function create(array $data);
 

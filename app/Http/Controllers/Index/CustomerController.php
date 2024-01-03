@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
-use App\Repository\Interface\IAttributeChildRepository;
+use App\Repository\Interface\ICartRepository;
+use App\Repository\Interface\ITermRepository;
 use App\Repository\Interface\IPostRepository;
 use App\Repository\Interface\IProductRepository;
 use Illuminate\Http\JsonResponse;
@@ -14,17 +15,20 @@ class CustomerController extends Controller
 {
     protected IPostRepository $postRepository;
     protected IProductRepository $productRepository;
-    protected IAttributeChildRepository $attributeChildRepository;
+    protected ITermRepository $termRepository;
+    protected ICartRepository $cartRepository;
 
     public function __construct
     (
         IPostRepository $postRepository,
         IProductRepository $productRepository,
-        IAttributeChildRepository $attributeChildRepository
+        ITermRepository $termRepository,
+        ICartRepository $cartRepository
     ) {
         $this->postRepository = $postRepository;
         $this->productRepository = $productRepository;
-        $this->attributeChildRepository = $attributeChildRepository;
+        $this->termRepository = $termRepository;
+        $this->cartRepository = $cartRepository;
     }
 
     /**
@@ -35,9 +39,9 @@ class CustomerController extends Controller
     {
         try {
             $products = $this->productRepository->all();
-            $attribute_child = $this->attributeChildRepository->all();
+            $terms = $this->termRepository->all();
             $posts = $this->postRepository->all();
-            return view('customers.index', compact('products', 'attribute_child', 'posts'));
+            return view('customers.index', compact('products', 'terms', 'posts'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,
@@ -56,6 +60,25 @@ class CustomerController extends Controller
             $products = $this->productRepository->all();
 
             return view('products.list', compact('products'));
+        } catch (\Exception $e) {
+            return response()->json([
+                'result' => false,
+                'message' => $e->getMessage(),
+            ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Get view list Carts
+     * @return View|JsonResponse
+     * */
+    public function getCarts(): View|JsonResponse
+    {
+        try {
+            $products = $this->productRepository->all();
+            $carts = $this->cartRepository->getCartByUserIDAndStatus(auth()->id(), false);
+
+            return view('carts.list', compact('carts', 'products'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,

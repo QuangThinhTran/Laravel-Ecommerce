@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -53,8 +54,8 @@ class Product extends Model
     /**
      * Get attributes child by Product
      * */
-    public function attributesChild(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function terms(): BelongsToMany
     {
-        return $this->belongsToMany(AttributeChild::class, 'attribute_list', 'product_id', 'attributeChild_id');
+        return $this->belongsToMany(Term::class, 'product_terms', 'product_id', 'term_id')->withPivot('price');
     }
 }

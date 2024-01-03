@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Repository\AttributeChildRepository;
+use App\Repository\TermRepository;
 use App\Repository\AttributeRepository;
 use App\Repository\CartRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
-use App\Repository\Interface\IAttributeChildRepository;
+use App\Repository\Interface\ITermRepository;
 use App\Repository\Interface\IAttributeRepository;
 use App\Repository\Interface\ICartRepository;
 use App\Repository\Interface\ICategoryRepository;
@@ -36,7 +36,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IProductRepository::class, ProductRepository::class);
         $this->app->bind(ICommentRepository::class, CommentRepository::class);
         $this->app->bind(IAttributeRepository::class, AttributeRepository::class);
-        $this->app->bind(IAttributeChildRepository::class, AttributeChildRepository::class);
+        $this->app->bind(ITermRepository::class, TermRepository::class);
         $this->app->bind(ICartRepository::class, CartRepository::class);
         $this->app->bind(IOrderRepository::class, OrderRepository::class);
         $this->app->bind(ICategoryRepository::class, CategoryRepository::class);

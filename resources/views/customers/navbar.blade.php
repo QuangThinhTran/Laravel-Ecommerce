@@ -3,11 +3,10 @@
         <a class="nav-link active" aria-current="page" href="{{ route('customer.products') }}">Product</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{{ route('attribute.child.create') }}">Attribute
-            Child</a>
+        <a class="nav-link active" aria-current="page" href="{{ route('term.create') }}">Term</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{{ route('cart.create') }}">Cart</a>
+        <a class="nav-link active" aria-current="page" href="{{ route('customer.carts') }}">Cart</a>
     </li>
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{ route('order.list') }}">Order</a>

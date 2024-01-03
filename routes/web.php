@@ -15,6 +15,7 @@ use App\Http\Controllers\Index\HomeController;
 use App\Http\Controllers\Index\MerchantController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\Index\CustomerController;
+use App\Http\Controllers\CMS\TermController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -62,10 +63,10 @@ Route::prefix('attribute')->group(function () {
 //    Route::post('detail/{id}', [AttributeController::class, 'detail'])->name('attribute.detail');
 });
 
-Route::prefix('attribute-child')->group(function () {
-    Route::get('create-child', [AttributeController::class, 'createChild'])->name('attribute.child.create');
-    Route::post('store-child', [AttributeController::class, 'storeChild'])->name('attribute.child.store');
-    Route::get('detail', [AttributeController::class, 'detailChild'])->name('attribute.child.detail');
+Route::prefix('term')->group(function () {
+    Route::get('create', [TermController::class, 'create'])->name('term.create');
+    Route::post('store', [TermController::class, 'store'])->name('term.store');
+    Route::get('detail', [TermController::class, 'detail'])->name('term.detail');
 });
 
 Route::prefix('product')->group(function () {
@@ -96,6 +97,7 @@ Route::prefix('merchant')->group(function () {
 Route::prefix('customer')->group(function () {
     Route::get('index', [CustomerController::class, 'index'])->name('customer.index');
     Route::get('products', [CustomerController::class, 'getProducts'])->name('customer.products');
+    Route::get('carts', [CustomerController::class, 'getCarts'])->name('customer.carts');
 });
 
 

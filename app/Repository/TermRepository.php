@@ -1,22 +1,23 @@
 <?php
+
 namespace App\Repository;
 
-use App\Models\AttributeChild;
-use App\Repository\Interface\IAttributeChildRepository;
+use App\Models\Term;
+use App\Repository\Interface\ITermRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Collection\Collection;
 
-class AttributeChildRepository implements IAttributeChildRepository
+class TermRepository implements ITermRepository
 {
 
     /**
      * Get list AttributeChild and paginate
-     * @return LengthAwarePaginator;
+     * @return \Illuminate\Database\Eloquent\Collection|array
      */
-    public function all(): LengthAwarePaginator
+    public function all(): \Illuminate\Database\Eloquent\Collection|array
     {
-        return AttributeChild::with('attribute')->paginate(10);
+        return Term::with('attribute')->get();
     }
 
     /**
@@ -26,7 +27,7 @@ class AttributeChildRepository implements IAttributeChildRepository
      */
     public function create(array $data): Model|Collection
     {
-        return AttributeChild::create($data);
+        return Term::create($data);
     }
 
     /**
@@ -35,7 +36,7 @@ class AttributeChildRepository implements IAttributeChildRepository
      */
     public function find($attribute_id): mixed
     {
-        return AttributeChild::where('attribute_id', $attribute_id)->get();
+        return Term::where('attribute_id', $attribute_id)->get();
     }
 
     /**

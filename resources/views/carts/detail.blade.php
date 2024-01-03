@@ -63,22 +63,22 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            @if(!is_null($product->attributesChild))
+                                            @if(!is_null($product->terms))
                                                 <hr>
-                                                Attribute Child
-                                                @foreach($product->attributesChild as $attribute_child)
+                                                Term
+                                                @foreach($product->terms as $term)
                                                     <div class="d-flex justify-content-between mt-3">
                                                         <div>
                                                             <span> Name :</span>
-                                                            <span class="fs-6 fw-light text-muted"> {{ $attribute_child->name }} </span>
+                                                            <span class="fs-6 fw-light text-muted"> {{ $term->name }} </span>
                                                         </div>
                                                         <div>
                                                             <span> Price :</span>
-                                                            <span class="fs-6 fw-light text-muted"> {{ $attribute_child->price }} </span>
+                                                            <span class="fs-6 fw-light text-muted"> {{ $term->price }} </span>
                                                         </div>
                                                         <div>
                                                             <span> Type :</span>
-                                                            <span class="fs-6 fw-light text-muted"> {{ $attribute_child->attribute->name }} </span>
+                                                            <span class="fs-6 fw-light text-muted"> {{ $term->attribute->name }} </span>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -102,10 +102,18 @@
                                 </div>
                                 <form action="{{ route('order.checkout') }}" method="post">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                                    <input type="hidden" name="cart_id" value="{{ $cart->id }}">
-                                    <input type="hidden" name="active" value="1">
-                                    <input type="hidden" name="status_id" value="4">
+                                    <input type="text" name="customer_name" value="{{ Auth::user()->name }}">
+                                    <input type="text" name="customer_email" value="{{ Auth::user()->email }}">
+                                    <input type="text" name="customer_id" value="{{ Auth::id() }}">
+                                    @foreach($cart->listProducts as $product)
+                                        <input type="text" value="{{ $product->user->name }}" name="merchant_name">
+                                        <input type="text" value="{{ $product->user->email }}" name="merchant_email">
+                                        <input type="text" value="{{ $product->user->id }}" name="merchant_id">
+                                        <input type="text" value="{{ $product->id }}" name="products_id[]">
+                                    @endforeach
+                                    <input type="text" name="total" value="{{ $cart->total }}">
+                                    <input type="text" name="active" value="1">
+                                    <input type="text" name="status_id" value="4">
                                     <div class="d-flex align-items-center gap-3">
                                         <button type="submit" style="color: green;background: none;border: none">
                                             Payment

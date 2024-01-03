@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->double('total');
+            $table->integer('quantity');
             $table->boolean('is_active')->default(0);
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
 

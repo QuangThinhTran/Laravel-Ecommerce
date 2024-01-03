@@ -7,8 +7,7 @@
            href="{{ route('attribute.create') }}">Attribute</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="{{ route('attribute.child.create') }}">Attribute
-            Child</a>
+        <a class="nav-link active" aria-current="page" href="{{ route('term.create') }}">Term</a>
     </li>
     <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="{{ route('cart.create') }}">Cart</a>

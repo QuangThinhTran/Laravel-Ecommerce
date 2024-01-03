@@ -19,6 +19,9 @@
                             Name Product: {{ $product->name }}
                         </div>
                         <div>
+                            <input type="number" name="quantity_products[]">
+                        </div>
+                        <div>
                             Price: {{ $product->price }}
                         </div>
                     </div>

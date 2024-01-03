@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('list_product', function (Blueprint $table) {
-            $table->id();
-
+        Schema::create('product_posts', function (Blueprint $table) {
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('post_id')->constrained('posts')->cascadeOnDelete();
         });
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('list_product');
+        Schema::dropIfExists('product_posts');
     }
 };

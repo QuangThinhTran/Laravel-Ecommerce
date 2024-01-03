@@ -16,15 +16,16 @@ class ProductRepository implements IProductRepository
      */
     public function all(): LengthAwarePaginator
     {
-        return Product::with('category', 'user', 'images', 'post', 'attributesChild.attribute')->orderByDesc('id')->paginate(10);
+        return Product::with('category', 'user', 'images', 'post', 'terms.attribute')->orderByDesc('id')->paginate(10);
     }
+
     /**
      * Get list Products by User id and paginate
      * @return LengthAwarePaginator
      * */
     public function getProductByUser(): LengthAwarePaginator
     {
-        return Product::with('category', 'user', 'images', 'post', 'attributesChild.attribute')->where('user_id',
+        return Product::with('category', 'user', 'images', 'post', 'terms.attribute')->where('user_id',
             auth()->id())->orderByDesc('id')->paginate(10);
     }
 

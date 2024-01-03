@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AttributeChildRequest extends FormRequest
+class TermRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class AttributeChildRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'price' => 'required',
+            'is_active' => 'required',
             'attribute_id' => 'required'
         ];
     }

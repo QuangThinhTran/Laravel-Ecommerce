@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
 use App\Repository\Interface\ICartRepository;
 use App\Repository\Interface\IProductRepository;
+use App\Services\ItemService;
 use App\Services\PivotService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -18,16 +19,19 @@ class CartController extends Controller
     protected ICartRepository $cartRepository;
     protected PivotService $pivotService;
     protected IProductRepository $productRepository;
+    protected ItemService $itemService;
 
     public function __construct
     (
         ICartRepository $cartRepository,
         IProductRepository $productRepository,
-        PivotService $pivotService
+        PivotService $pivotService,
+        ItemService $itemService
     ) {
         $this->cartRepository = $cartRepository;
         $this->productRepository = $productRepository;
         $this->pivotService = $pivotService;
+        $this->itemService = $itemService;
     }
 
     /**
@@ -61,8 +65,10 @@ class CartController extends Controller
         try {
             $input = $request->input();
 
+            $quantity_products = $this->itemService->getArrayItems($input['quantity_products']);
+            $input['quantity'] = $this->itemService->countArrayItems($quantity_products, null);
             $cart = $this->cartRepository->create($input);
-            $this->pivotService->addProductsToCart($cart['id'], $input['product_id']);
+            $this->pivotService->addProductsToCart($cart['id'], $input['product_id'], $quantity_products);
             DB::commit();
 
             return back()->with('infor', ' Cart created Successfully');
