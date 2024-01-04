@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CartRequest;
 use App\Repository\Interface\ICartRepository;
 use App\Repository\Interface\IProductRepository;
+use App\Repository\Interface\ITermRepository;
 use App\Services\ItemService;
 use App\Services\PivotService;
 use Illuminate\Http\JsonResponse;
@@ -20,16 +21,19 @@ class CartController extends Controller
     protected PivotService $pivotService;
     protected IProductRepository $productRepository;
     protected ItemService $itemService;
+    protected ITermRepository $termRepository;
 
     public function __construct
     (
         ICartRepository $cartRepository,
         IProductRepository $productRepository,
+        ITermRepository $termRepository,
         PivotService $pivotService,
         ItemService $itemService
     ) {
         $this->cartRepository = $cartRepository;
         $this->productRepository = $productRepository;
+        $this->termRepository = $termRepository;
         $this->pivotService = $pivotService;
         $this->itemService = $itemService;
     }
@@ -43,8 +47,9 @@ class CartController extends Controller
         try {
             $carts = $this->cartRepository->all();
             $products = $this->productRepository->all();
+            $terms = $this->termRepository->all();
 
-            return view('carts.list', compact('carts', 'products'));
+            return view('carts.list', compact('carts', 'products', 'terms'));
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
@@ -66,7 +71,7 @@ class CartController extends Controller
             $input = $request->input();
 
             $quantity_products = $this->itemService->getArrayItems($input['quantity_products']);
-            $input['quantity'] = $this->itemService->countArrayItems($quantity_products, null);
+            $input['quantity'] = $this->itemService->sumArrayItems($quantity_products, null);
             $cart = $this->cartRepository->create($input);
             $this->pivotService->addProductsToCart($cart['id'], $input['product_id'], $quantity_products);
             DB::commit();

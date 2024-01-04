@@ -28,6 +28,27 @@
                 @endforeach
             </div>
         </div>
+        <hr>
+{{--        <div class="d-flex gap-3 align-items-center flex-column">--}}
+{{--            Terms--}}
+{{--            <div class="d-flex gap-3 flex-wrap">--}}
+{{--                @foreach($terms as $term)--}}
+{{--                    <div class="w-100 d-flex align-items-center justify-content-between">--}}
+{{--                        <input type="checkbox" name="terms_id[]" class="product-checkbox"--}}
+{{--                               value="{{ $term->id }}" data-price="{{ $term->price }}">--}}
+{{--                        <div>--}}
+{{--                            Name Product: {{ $term->name }}--}}
+{{--                        </div>--}}
+{{--                        <div>--}}
+{{--                            <input type="number" name="quantity_products[]">--}}
+{{--                        </div>--}}
+{{--                        <div>--}}
+{{--                            Price: {{ $term->price }}--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endforeach--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <input type="text" name="total" id="total" placeholder="Total Price" readonly>
         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
         <div class="">

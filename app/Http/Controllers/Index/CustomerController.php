@@ -41,6 +41,7 @@ class CustomerController extends Controller
             $products = $this->productRepository->all();
             $terms = $this->termRepository->all();
             $posts = $this->postRepository->all();
+
             return view('customers.index', compact('products', 'terms', 'posts'));
         } catch (\Exception $e) {
             return response()->json([
@@ -77,8 +78,9 @@ class CustomerController extends Controller
         try {
             $products = $this->productRepository->all();
             $carts = $this->cartRepository->getCartByUserIDAndStatus(auth()->id(), false);
+            $terms = $this->termRepository->all();
 
-            return view('carts.list', compact('carts', 'products'));
+            return view('carts.list', compact('carts', 'products', 'terms'));
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,

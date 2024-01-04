@@ -21,10 +21,10 @@ class ItemService
     /**
      * Sum item of Items
      * @param array $items
-     * @param int $result
+     * @param int|null $result
      * @return integer $result
      */
-    public function countArrayItems(array $items, int $result = 0): int
+    public function sumArrayItems(array $items, ?int $result = 0): int
     {
         foreach ($items as $item) {
             $result += $item;

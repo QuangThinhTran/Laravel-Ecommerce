@@ -23,7 +23,18 @@ class OrderRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'customer_name' => 'required',
+            'customer_email' => 'required',
+            'customer_id' => 'required',
+            'merchant_name' => 'required',
+            'merchant_email' => 'required',
+            'merchant_id' => 'required',
+
+            'quantity' => 'required',
+            'total' => 'required',
+            'active' => 'required',
             'status_id' => 'required',
+            'cart_id' => 'required',
         ];
     }
 }

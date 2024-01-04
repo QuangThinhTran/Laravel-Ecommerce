@@ -109,23 +109,24 @@
                                 </div>
                                 <form action="{{ route('order.checkout') }}" method="post">
                                     @csrf
-                                    <input type="text" name="customer_name" value="{{ Auth::user()->name }}">
-                                    <input type="text" name="customer_email" value="{{ Auth::user()->email }}">
-                                    <input type="text" name="customer_id" value="{{ Auth::id() }}">
+                                    <input type="hidden" name="customer_name" value="{{ Auth::user()->name }}">
+                                    <input type="hidden" name="customer_email" value="{{ Auth::user()->email }}">
+                                    <input type="hidden" name="customer_id" value="{{ Auth::id() }}">
                                     @foreach($cart->listProducts as $product)
-                                        <input type="text" value="{{ $product->user->name }}" name="merchant_name">
-                                        <input type="text" value="{{ $product->user->email }}" name="merchant_email">
-                                        <input type="text" value="{{ $product->user->id }}" name="merchant_id">
-                                        <input type="text" value="{{ $product->code }}" name="products_code[]">
-                                        <input type="text" value="{{ $product->name }}" name="products_name[]">
-                                        <input type="text" value="{{ $product->price }}" name="products_price[]">
-                                        <input type="text" value="{{ $product->pivot->quantity }}" name="products_quantity[]">
+                                        <input type="hidden" value="{{ $product->user->name }}" name="merchant_name">
+                                        <input type="hidden" value="{{ $product->user->email }}" name="merchant_email">
+                                        <input type="hidden" value="{{ $product->user->id }}" name="merchant_id">
+                                        <input type="hidden" value="{{ $product->code }}" name="products_code[]">
+                                        <input type="hidden" value="{{ $product->name }}" name="products_name[]">
+                                        <input type="hidden" value="{{ $product->price }}" name="products_price[]">
+                                        <input type="hidden" value="{{ $product->pivot->quantity }}"
+                                               name="products_quantity[]">
                                     @endforeach
-                                    <input type="text" name="quantity" value="{{ $cart->quantity }}">
-                                    <input type="text" name="total" value="{{ $cart->total }}">
-                                    <input type="text" name="active" value="1">
-                                    <input type="text" name="status_id" value="4">
-                                    <input type="text" name="cart_id" value="{{ $cart->id }}">
+                                    <input type="hidden" name="quantity" value="{{ $cart->quantity }}">
+                                    <input type="hidden" name="total" value="{{ $cart->total }}">
+                                    <input type="hidden" name="active" value="1">
+                                    <input type="hidden" name="status_id" value="4">
+                                    <input type="hidden" name="cart_id" value="{{ $cart->id }}">
                                     <div class="d-flex align-items-center gap-3">
                                         <button type="submit" style="color: green;background: none;border: none">
                                             Payment
