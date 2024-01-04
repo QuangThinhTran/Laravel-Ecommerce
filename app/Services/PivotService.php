@@ -85,6 +85,7 @@ class PivotService
      */
     public function addProductsToOrder($id, array $products_code, array $products_name, array $products_price, array $products_quantity): void
     {
+        $data = [];
         $order = $this->orderRepository->detail($id);
 
         foreach ($products_code as $key => $product_code) {
@@ -96,8 +97,7 @@ class PivotService
                 'item_price' => $products_price[$key],
                 'quantity' => $products_quantity[$key]
             ];
-
-            $this->orderRepository->createOrderDetail($data);
         }
+        $this->orderRepository->createOrderDetail($data);
     }
 }

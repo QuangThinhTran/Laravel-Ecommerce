@@ -10,10 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('order_detail', function (Blueprint $table) {
+        Schema::create('orders_detail', function (Blueprint $table) {
             $table->id();
 
-            $table->string('item_code')->nullable();
+            $table->string('item_code');
             $table->string('item_name');
             $table->string('item_price');
             $table->string('quantity');
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_order');
+        Schema::dropIfExists('orders_detail');
     }
 };
