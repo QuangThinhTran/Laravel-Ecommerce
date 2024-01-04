@@ -75,6 +75,10 @@
                                                             <span class="fs-6 fw-light text-muted"> {{ $product->category->name }} </span>
                                                         </div>
                                                         <div>
+                                                            <span> Quantity :</span>
+                                                            <span class="fs-6 fw-light text-muted"> {{ $product->pivot->quantity }} </span>
+                                                        </div>
+                                                        <div>
                                                             @if($product->is_active == 0)
                                                                 <span style="color: red"> InActive </span>
                                                             @else
@@ -93,7 +97,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <span> Price :</span>
-                                                                    <span class="fs-6 fw-light text-muted"> {{ $term->price }} </span>
+                                                                    <span class="fs-6 fw-light text-muted"> {{ $term->pivot->price }} </span>
                                                                 </div>
                                                                 <div>
                                                                     <span> Type :</span>

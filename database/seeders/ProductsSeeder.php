@@ -22,6 +22,7 @@ class ProductsSeeder extends Seeder
                 'category_id' => rand(1, 4),
                 'user_id' => rand(2, 14),
                 'post_id' => rand(1, 12),
+                'is_active' => rand(0, 1)
             ]);
         }
     }

@@ -18,5 +18,6 @@ interface IOrderRepository
 
     public function restore($id);
 
-    public function createOrderDetail(array $data);
+    public function createOrderDetailProducts(array $data);
+    public function createOrderDetailTerms(array $data);
 }

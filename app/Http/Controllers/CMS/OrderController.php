@@ -69,8 +69,10 @@ class OrderController extends Controller
 
             $order = $this->orderRepository->create($input);
             $this->cartRepository->updateStatus($input['cart_id'], $input['active']);
-            $this->pivotService->addProductsToOrder($order['id'], $products_code, $products_name, $products_price,
+            $this->pivotService->addProductsToOrderDetail($order['id'], $products_code, $products_name, $products_price,
                 $products_quantity);
+            $this->pivotService->addTermsToOrderDetail($order['id'], $input['terms_price'] ?? null,
+                $input['terms_name'] ?? null);
             DB::commit();
 
             return redirect()->route('order.list');

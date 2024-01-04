@@ -3,7 +3,8 @@
 namespace App\Repository;
 
 use App\Models\Order;
-use App\Models\OrderDetail;
+use App\Models\OrderDetailProduct;
+use App\Models\OrderDetailTerm;
 use App\Repository\Interface\IOrderRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,7 +18,8 @@ class OrderRepository implements IOrderRepository
      * */
     public function all(): LengthAwarePaginator
     {
-        return Order::with('customer', 'merchant', 'status', 'orderDetail')->orderByDesc('id')->paginate(10);
+        return Order::with('customer', 'merchant', 'status', 'orderDetailProducts',
+            'orderDetailTerms')->orderByDesc('id')->paginate(10);
     }
 
     /**
@@ -83,12 +85,22 @@ class OrderRepository implements IOrderRepository
     }
 
     /**
-     * Create detail Order
+     * Create Order Detail Products
      * @param array $data
      * @return Model|Collection
      * */
-    public function createOrderDetail(array $data): Model|Collection
+    public function createOrderDetailProducts(array $data): Model|Collection
     {
-        return OrderDetail::create($data);
+        return OrderDetailProduct::create($data);
+    }
+
+    /**
+     * Create Order Detail Terms
+     * @param array $data
+     * @return Model|Collection
+     * */
+    public function createOrderDetailTerms(array $data): Model|Collection
+    {
+        return OrderDetailTerm::create($data);
     }
 }

@@ -46,7 +46,7 @@ class CartController extends Controller
     {
         try {
             $carts = $this->cartRepository->all();
-            $products = $this->productRepository->all();
+            $products = $this->productRepository->getProductByUser();
             $terms = $this->termRepository->all();
 
             return view('carts.list', compact('carts', 'products', 'terms'));

@@ -6,17 +6,19 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AttributesSeeder extends Seeder
+class TermsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 20; $i++) {
-            DB::table('attributes')->insert([
+        for ($i = 1; $i <= 40; $i++) {
+            DB::table('terms')->insert([
                 'name' => fake()->unique()->name(),
-                'user_id' => rand(2, 13)
+                'description' => fake()->text(),
+                'attribute_id' => rand(1, 20),
+                'is_active' => rand(0, 1)
             ]);
         }
     }

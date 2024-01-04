@@ -46,8 +46,13 @@ class Order extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function orderDetail(): HasMany
+    public function orderDetailProducts(): HasMany
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetailProduct::class);
+    }
+
+    public function orderDetailTerms(): HasMany
+    {
+        return $this->hasMany(OrderDetailTerm::class);
     }
 }

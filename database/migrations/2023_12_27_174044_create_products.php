@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->double('price');
             $table->text('description')->nullable();
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active');
 
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();

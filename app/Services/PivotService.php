@@ -75,29 +75,54 @@ class PivotService
     }
 
     /**
-     * Attach data Products to Order
+     * Create Products to Order Detail
      * @param $id
-     * @param array $products_code
-     * @param array $products_name
-     * @param array $products_price
-     * @param array $products_quantity
+     * @param array|null $products_code
+     * @param array|null $products_name
+     * @param array|null $products_price
+     * @param array|null $products_quantity
      * @return void
      */
-    public function addProductsToOrder($id, array $products_code, array $products_name, array $products_price, array $products_quantity): void
+    public function addProductsToOrderDetail($id, ?array $products_code, ?array $products_name, ?array $products_price, ?array $products_quantity): void
     {
-        $data = [];
+        if (is_null($products_code) || is_null($products_name) || is_null($products_price) || is_null($products_quantity)) {
+            return;
+        }
         $order = $this->orderRepository->detail($id);
 
         foreach ($products_code as $key => $product_code) {
-
             $data = [
+                'product_code' => $product_code,
+                'product_name' => $products_name[$key],
+                'product_price' => $products_price[$key],
+                'quantity' => $products_quantity[$key],
                 'order_id' => $order['id'],
-                'item_code' => $product_code,
-                'item_name' => $products_name[$key],
-                'item_price' => $products_price[$key],
-                'quantity' => $products_quantity[$key]
             ];
+            $this->orderRepository->createOrderDetailProducts($data);
         }
-        $this->orderRepository->createOrderDetail($data);
+    }
+
+    /**
+     * Create Terms to Order Detail
+     * @param $id
+     * @param array|null $terms_price
+     * @param array|null $terms_name
+     * @return void
+     */
+    public function addTermsToOrderDetail($id, ?array $terms_price, ?array $terms_name): void
+    {
+        if ($terms_price == null || $terms_name == null) {
+            return;
+        }
+        $order = $this->orderRepository->detail($id);
+
+        foreach ($terms_name as $key => $term_name) {
+            $data = [
+                'term_name' => $term_name,
+                'term_price' => $terms_price[$key],
+                'order_id' => $order['id'],
+            ];
+            $this->orderRepository->createOrderDetailTerms($data);
+        }
     }
 }

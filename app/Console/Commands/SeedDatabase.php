@@ -35,5 +35,6 @@ class SeedDatabase extends Command
         Artisan::call('db:seed --class=ImagesSeeder');
         Artisan::call('db:seed --class=CommentsSeeder');
         Artisan::call('db:seed --class=AttributesSeeder');
+        Artisan::call('db:seed --class=TermsSeeder');
     }
 }

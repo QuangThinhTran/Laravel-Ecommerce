@@ -70,8 +70,8 @@
                                                     <span class="fs-6 fw-light text-muted"> {{ $product->pivot->quantity }} </span>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            @if(!empty($product->terms))
+                                            @if($product->terms->isNotEmpty())
+                                                <hr>
                                                 @foreach($product->terms as $term)
                                                     Term
                                                     <div class="d-flex justify-content-between mt-3">
@@ -81,7 +81,7 @@
                                                         </div>
                                                         <div>
                                                             <span> Price :</span>
-                                                            <span class="fs-6 fw-light text-muted"> {{ $term->price }} </span>
+                                                            <span class="fs-6 fw-light text-muted"> {{ $term->pivot->price }} </span>
                                                         </div>
                                                         <div>
                                                             <span> Type :</span>
@@ -113,11 +113,16 @@
                                     <input type="hidden" name="customer_email" value="{{ Auth::user()->email }}">
                                     <input type="hidden" name="customer_id" value="{{ Auth::id() }}">
                                     @foreach($cart->listProducts as $product)
+
                                         <input type="hidden" value="{{ $product->user->name }}" name="merchant_name">
                                         <input type="hidden" value="{{ $product->user->email }}" name="merchant_email">
                                         <input type="hidden" value="{{ $product->user->id }}" name="merchant_id">
                                         <input type="hidden" value="{{ $product->code }}" name="products_code[]">
                                         <input type="hidden" value="{{ $product->name }}" name="products_name[]">
+                                        @foreach($product->terms as $term)
+                                            <input type="text" value="{{ $term->pivot->price }}" name="terms_price[]">
+                                            <input type="text" value="{{ $term->name }}" name="terms_name[]">
+                                        @endforeach
                                         <input type="hidden" value="{{ $product->price }}" name="products_price[]">
                                         <input type="hidden" value="{{ $product->pivot->quantity }}"
                                                name="products_quantity[]">

@@ -6,11 +6,15 @@ class ItemService
 {
     /**
      * Filter items of Items != null and return array_values
-     * @param array $items
-     * @return array
-     * */
-    public function getArrayItems(array $items): array
+     * @param array|null $items
+     * @return array|null
+     */
+    public function getArrayItems(?array $items): ?array
     {
+        if (is_null($items))
+        {
+            return null;
+        }
         $data = array_filter($items, function ($item) {
             return $item != null;
         });

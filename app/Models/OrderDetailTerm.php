@@ -9,16 +9,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 /**
  * @method static create(array $data)
  */
-class OrderDetail extends Model
+class OrderDetailTerm extends Model
 {
     use HasFactory;
 
-    protected $table = 'order_detail';
+    protected $table = 'order_detail_terms';
+
     protected $fillable = [
-        'item_code',
-        'item_name',
-        'item_price',
-        'quantity',
+        'term_name',
+        'term_price',
+//        'quantity',
         'order_id'
     ];
 

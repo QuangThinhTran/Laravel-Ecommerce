@@ -5,36 +5,61 @@
             <div class="col-6">
                 <h3>Orders List</h3>
                 <hr>
-                Products
+
                 <div class="mt-3">
                     <div class="mb-3">
                         <div class="mb-5">
+                            @if($orders->isNotEmpty())
+                                Products
+                            @endif
                             @foreach($orders as $order)
                                 <div class="m-2">
-                                    @foreach($order->orderDetail as $detail)
+                                    @foreach($order->orderDetailProducts as $detailProduct)
                                         <div class="card d-flex flex-row align-items-center justify-content-between px-3">
                                             <div class="d-flex align-items-center gap-3">
                                                 Code
                                                 <h3 style="font-weight: bold">
-                                                    {{ $detail->item_code }}
+                                                    {{ $detailProduct->product_code }}
                                                 </h3>
                                             </div>
                                             <div class="d-flex align-items-center gap-3">
                                                 Name
                                                 <h3 style="font-weight: bold">
-                                                    {{ $detail->item_name }}
+                                                    {{ $detailProduct->product_name }}
                                                 </h3>
                                             </div>
+                                        </div>
+                                        <div class="card d-flex flex-row align-items-center justify-content-between px-3">
                                             <div class="d-flex align-items-center gap-3">
                                                 Price
                                                 <h3 style="font-weight: bold">
-                                                    {{ $detail->item_price }}
+                                                    {{ $detailProduct->product_price }}
                                                 </h3>
                                             </div>
                                             <div class="d-flex align-items-center gap-3">
                                                 Quantity
                                                 <h3 style="font-weight: bold">
-                                                    {{ $detail->quantity }}
+                                                    {{ $detailProduct->quantity }}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    @if($order->orderDetailTerms->isNotEmpty())
+                                        <hr>
+                                        Terms
+                                    @endif
+                                    @foreach($order->orderDetailTerms as $detailTerm)
+                                        <div class="card d-flex flex-row align-items-center justify-content-between px-3">
+                                            <div class="d-flex align-items-center gap-3">
+                                                Name
+                                                <h3 style="font-weight: bold">
+                                                    {{ $detailTerm->term_name }}
+                                                </h3>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-3">
+                                                Price
+                                                <h3 style="font-weight: bold">
+                                                    {{ $detailTerm->term_price }}
                                                 </h3>
                                             </div>
                                         </div>
@@ -42,7 +67,7 @@
                                 </div>
                                 <hr>
                                 Customer
-                                <div class="card d-flex flex-row align-items-center justify-content-between px-3">
+                                <div class="card d-flex px-3">
                                     <div class="d-flex align-items-center gap-3">
                                         Name
                                         <h3 style="font-weight: bold">
