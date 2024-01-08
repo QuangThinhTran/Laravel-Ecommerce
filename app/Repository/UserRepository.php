@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class UserRepository implements IUserRepository
 {
     /**
-     * Get all Users
+     * Get all records of User with relationships and paginate
      * @return LengthAwarePaginator
      */
     public function all(): LengthAwarePaginator
@@ -22,7 +22,7 @@ class UserRepository implements IUserRepository
     }
 
     /**
-     * Find Users by action
+     * Find a specific User record based action with data and paginate
      * @param $action // column want find
      * @param $data // data of column want find
      * @return LengthAwarePaginator
@@ -34,7 +34,7 @@ class UserRepository implements IUserRepository
     }
 
     /**
-     * Get employees by merchant
+     * Get all records of User who have the role of employees under a merchant, paginated
      * @return LengthAwarePaginator|null
      */
     public function getUserByMerchant(): LengthAwarePaginator|null
@@ -48,9 +48,9 @@ class UserRepository implements IUserRepository
     }
 
     /**
-     * Login User
-     * @param array $data
-     * @return bool|array
+     * Login User using provided credentials
+     * @param array $data The user credentials (['username', 'password'])
+     * @return bool|array False on login failure, array of credentials on successful login
      * */
     public function login(array $data): bool|array
     {
@@ -66,7 +66,7 @@ class UserRepository implements IUserRepository
     }
 
     /**
-     * Register User
+     * Register a new User record with provided data
      * @param array $data
      * @return Model|Collection
      * */
@@ -82,7 +82,7 @@ class UserRepository implements IUserRepository
     }
 
     /**
-     * Detail User
+     * Find a specific User record of ID with relationships
      * @param $id
      * @return Model|Collection
      * */
@@ -92,7 +92,7 @@ class UserRepository implements IUserRepository
     }
 
     /**
-     * Search User by name
+     * Search for users by name
      * @return Model|Collection
      * */
     public function search(): Model|Collection

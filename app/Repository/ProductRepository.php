@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProductRepository implements IProductRepository
 {
     /**
-     * Get all products
+     * Get all records of Product with relationships, ordered by ID in descending Product and paginate
      * @return LengthAwarePaginator
      */
     public function all(): LengthAwarePaginator
@@ -20,7 +20,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Get list Products by User id and paginate
+     * Get all records of Product related to the authenticated user with relationships, ordered by ID in descending Product and paginate
      * @return LengthAwarePaginator
      * */
     public function getProductByUser(): LengthAwarePaginator
@@ -30,7 +30,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Get list Products active or inactive and paginate
+     * Get all records of Product based on active/inactive status, with relationships and paginate
      * @param boolean $active | true: active , false: inactive
      * @return LengthAwarePaginator
      * */
@@ -41,7 +41,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Create Product
+     * Create a new Product record
      * @param array $data
      * @return Model|Collection
      * */
@@ -51,7 +51,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Detail Product
+     * Find a specific Product record by ID
      * @param $id
      * @return Model|Collection
      * */
@@ -61,7 +61,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Update Product
+     * Update a specific Product record by ID with provided data
      * @param $id
      * @param array $data
      * @return bool
@@ -72,7 +72,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Delete Product
+     * Delete a specific Product record by ID
      * @param $id
      * @return bool|null
      * */
@@ -82,7 +82,7 @@ class ProductRepository implements IProductRepository
     }
 
     /**
-     * Restore Product
+     * Restore a specific soft-delete Product record by ID
      * @param $id
      * @return bool
      * */

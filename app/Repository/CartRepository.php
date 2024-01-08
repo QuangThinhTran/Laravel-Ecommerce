@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class CartRepository implements ICartRepository
 {
     /**
-     * Get list Cart and paginate
+     * Get all records of Cart with relationships, ordered by ID in descending order and paginate
      * @return LengthAwarePaginator
      * */
     public function all(): LengthAwarePaginator
@@ -21,7 +21,7 @@ class CartRepository implements ICartRepository
     }
 
     /**
-     * Get list Cart by id User, status and paginate
+     * Get all records of Cart by User ID and status with relationships, ordered by ID in descending Cart and paginate
      * @param $id // User Id
      * @param boolean $status
      * @return LengthAwarePaginator
@@ -33,7 +33,7 @@ class CartRepository implements ICartRepository
     }
 
     /**
-     * Get list Cart and paginate
+     * Create a new Cart record
      * @param array $data
      * @return Model|Collection
      * */
@@ -43,7 +43,7 @@ class CartRepository implements ICartRepository
     }
 
     /**
-     * Get detail Cart
+     * Find a specific Cart record by ID with relationships
      * @param $id
      * @return Model|Collection
      * */
@@ -53,7 +53,7 @@ class CartRepository implements ICartRepository
     }
 
     /**
-     * Update Cart
+     * Update a specific Cart by ID with relationships and provided data
      * @param $id
      * @param array $data
      * @return bool
@@ -64,7 +64,7 @@ class CartRepository implements ICartRepository
     }
 
     /**
-     * Update status Cart
+     * Update the status of a specific Cart record by ID with relationships
      * @param $id
      * @param $active
      * @return bool
@@ -77,22 +77,22 @@ class CartRepository implements ICartRepository
     }
 
     /**
-     * delete Cart
+     * Delete a specific Cart record by ID
      * @param $id
      * @return bool|null
      * */
     public function delete($id): bool|null
     {
-        return Cart::with('listProducts')->findOrFail($id)->delete();
+        return Cart::findOrFail($id)->delete();
     }
 
     /**
-     * Get list Cart and paginate
+     * Restore a specific soft-deleted Cart record by ID
      * @param $id
      * @return bool|int
      * */
     public function restore($id): bool|int
     {
-        return Cart::with('listProducts')->findOrFail($id)->withTrashed()->restore();
+        return Cart::findOrFail($id)->withTrashed()->restore();
     }
 }

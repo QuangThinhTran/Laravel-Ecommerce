@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class PostRepository implements IPostRepository
 {
     /**
-     * Get list Posts and paginate
+     * Get all records of Posts with relationships, ordered by ID in descending Post and paginate
      * @return LengthAwarePaginator
      * */
     public function all(): LengthAwarePaginator
@@ -21,7 +21,7 @@ class PostRepository implements IPostRepository
     }
 
     /**
-     * Create Posts
+     * Create a new Post record
      * @param array $data
      * @return Model|Collection
      * */
@@ -31,7 +31,7 @@ class PostRepository implements IPostRepository
     }
 
     /**
-     * Detail Posts
+     * Find a specific Post record by ID with relationships
      * @param $id
      * @return Model|Collection
      * */
@@ -41,7 +41,7 @@ class PostRepository implements IPostRepository
     }
 
     /**
-     * Update Posts
+     * Update a new Post record by ID with provided data
      * @param $id
      * @param array $data
      * @return bool
@@ -52,7 +52,7 @@ class PostRepository implements IPostRepository
     }
 
     /**
-     * Delete Posts
+     * Delete a specific Post record by ID
      * @param $id
      * @return bool|null
      * */
@@ -62,7 +62,7 @@ class PostRepository implements IPostRepository
     }
 
     /**
-     * Restore Posts
+     * Restore a specific soft-delete Post record by ID
      * @param $id
      * @return bool
      * */

@@ -11,7 +11,7 @@ use Ramsey\Collection\Collection;
 class CategoryRepository implements ICategoryRepository
 {
     /**
-     * Get list Category and paginate
+     * Get all records of Category with relationships and paginate
      * @return LengthAwarePaginator
      * */
     public function all(): LengthAwarePaginator
@@ -20,7 +20,7 @@ class CategoryRepository implements ICategoryRepository
     }
 
     /**
-     * Create Category
+     * Create a new Category record
      * @param array $data
      * @return Model|Collection
      * */
@@ -30,7 +30,7 @@ class CategoryRepository implements ICategoryRepository
     }
 
     /**
-     * Create Category
+     * Delete a specific Category record by ID
      * @param $id
      * @return bool|null
      * */

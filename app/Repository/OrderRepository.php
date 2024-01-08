@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderRepository implements IOrderRepository
 {
     /**
-     * Get list Orders and paginate
+     * Get all records of Orders with relationships, ordered by ID in descending order and paginate
      * @return LengthAwarePaginator
      * */
     public function all(): LengthAwarePaginator
@@ -23,7 +23,7 @@ class OrderRepository implements IOrderRepository
     }
 
     /**
-     * Get list Orders and paginate
+     * Get all records of Orders by action, data, with relationships, ordered by ID in descending order and paginate
      * @param $action
      * @param $data
      * @return LengthAwarePaginator
@@ -34,7 +34,7 @@ class OrderRepository implements IOrderRepository
     }
 
     /**
-     * Create Order
+     * Create a new Order record
      * @param array $data
      * @return Model|Collection
      * */
@@ -44,7 +44,7 @@ class OrderRepository implements IOrderRepository
     }
 
     /**
-     * Detail Order
+     * Find a specific Order record by ID with relationships
      * @param $id
      * @return Model|Collection
      * */
@@ -54,38 +54,38 @@ class OrderRepository implements IOrderRepository
     }
 
     /**
-     * Update Order
+     * Update a specific Order record by ID, with provided data
      * @param $id
      * @param array $data
      * @return bool
      * */
     public function update($id, array $data): bool
     {
-        return Order::with('cart', 'user', 'status')->findOrFail($id)->update($data);
+        return Order::findOrFail($id)->update($data);
     }
 
     /**
-     * Delete Order
+     * Delete a specific Order record by ID
      * @param $id
      * @return bool|null
      * */
     public function delete($id): bool|null
     {
-        return Order::with('cart', 'user', 'status')->findOrFail($id)->delete();
+        return Order::findOrFail($id)->delete();
     }
 
     /**
-     * Restore Order
+     * Restore a specific soft-delete Order record by ID
      * @param $id
      * @return bool
      * */
     public function restore($id): bool
     {
-        return Order::with('cart', 'user', 'status')->findOrFail($id)->withTrashed()->restore();
+        return Order::findOrFail($id)->withTrashed()->restore();
     }
 
     /**
-     * Create Order Detail Products
+     * Create a new OrderDetailProduct record
      * @param array $data
      * @return Model|Collection
      * */
@@ -95,7 +95,7 @@ class OrderRepository implements IOrderRepository
     }
 
     /**
-     * Create Order Detail Terms
+     * Create a new OrderDetailTerm record
      * @param array $data
      * @return Model|Collection
      * */

@@ -12,16 +12,16 @@ class TermRepository implements ITermRepository
 {
 
     /**
-     * Get list AttributeChild and paginate
-     * @return \Illuminate\Database\Eloquent\Collection|array
+     * Get all records of AttributeChild with relationships and paginate
+     * @return Collection|array
      */
-    public function all(): \Illuminate\Database\Eloquent\Collection|array
+    public function all(): Collection|array
     {
         return Term::with('attribute')->get();
     }
 
     /**
-     * Create AttributeChild
+     * Create a new AttributeChild record
      * @param array $data
      * @return Model|Collection
      */
@@ -31,6 +31,7 @@ class TermRepository implements ITermRepository
     }
 
     /**
+     * Find a specific Term record by Attribute ID
      * @param $attribute_id
      * @return mixed
      */
@@ -40,6 +41,7 @@ class TermRepository implements ITermRepository
     }
 
     /**
+     * Update a specific Term record by ID with provided data
      * @param $id
      * @param array $data
      * @return mixed
@@ -50,6 +52,7 @@ class TermRepository implements ITermRepository
     }
 
     /**
+     * Delete a specific Term record by ID
      * @param $id
      * @return mixed
      */
@@ -59,6 +62,7 @@ class TermRepository implements ITermRepository
     }
 
     /**
+     * Restore a specific soft-delete Term record by ID
      * @param $id
      * @return mixed
      */

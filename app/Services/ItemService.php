@@ -5,9 +5,9 @@ namespace App\Services;
 class ItemService
 {
     /**
-     * Filter items of Items != null and return array_values
-     * @param array|null $items
-     * @return array|null
+     * Filter items of the input array removing null values and re-index the resulting array
+     * @param array|null $items The input array that may contain null values
+     * @return array|null The filtered array without null values or null if the input is null
      */
     public function getArrayItems(?array $items): ?array
     {
@@ -23,10 +23,10 @@ class ItemService
     }
 
     /**
-     * Sum item of Items
-     * @param array $items
-     * @param int|null $result
-     * @return integer $result
+     * Calculate the sum of integers in the input array
+     * @param array $items An array of integers to sum
+     * @param int|null $result The initial value for the sum (defaults to 0 if not provided)
+     * @return int The sum of the integers in the array
      */
     public function sumArrayItems(array $items, ?int $result = 0): int
     {

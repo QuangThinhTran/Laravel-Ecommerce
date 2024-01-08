@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static create(array $data)
+ * @method static findOrFail($id)
  */
 class Cart extends Model
 {

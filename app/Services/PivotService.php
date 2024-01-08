@@ -30,8 +30,8 @@ class PivotService
     }
 
     /**
-     * Feature add employees for User
-     * @param User $user
+     * Attach newly created employee to the merchant
+     * @param User $user The data for creating the new employee
      * @return void
      * */
     public function addEmployee(User $user): void
@@ -43,13 +43,13 @@ class PivotService
     }
 
     /**
-     * Attach data Terms to Product
-     * @param $id
-     * @param array $terms
-     * @param array $price_items
+     * Attach newly created Term to a Product with corresponding price items
+     * @param mixed $id The ID of the Product to which the terms will be attached
+     * @param array $terms An array of Term IDs to attach
+     * @param array $price_items An array of prices corresponding to each Term
      * @return void
      * */
-    public function addTermToProduct($id, array $terms, array $price_items): void
+    public function addTermToProduct(mixed $id, array $terms, array $price_items): void
     {
         $product = $this->productRepository->find($id);
 
@@ -59,13 +59,13 @@ class PivotService
     }
 
     /**
-     * Attach data Products to Cart
-     * @param $id
-     * @param array $products
-     * @param array $quantity_products
+     * Attach newly created Products to Cart with quantities
+     * @param mixed $id The ID of the Cart to which the products will be attached
+     * @param array $products An array of Product IDs to attach
+     * @param array $quantity_products An array of quantities corresponding to each Product
      * @return void
      * */
-    public function addProductsToCart($id, array $products, array $quantity_products): void
+    public function addProductsToCart(mixed $id, array $products, array $quantity_products): void
     {
         $carts = $this->cartRepository->detail($id);
 
@@ -75,15 +75,15 @@ class PivotService
     }
 
     /**
-     * Create Products to Order Detail
-     * @param $id
-     * @param array|null $products_code
-     * @param array|null $products_name
-     * @param array|null $products_price
-     * @param array|null $products_quantity
+     * Create a new Products records within Order Detail
+     * @param mixed $id The ID of the Order to which the products will be added
+     * @param array|null $products_code An array of product codes
+     * @param array|null $products_name An array of product names
+     * @param array|null $products_price An array of product prices
+     * @param array|null $products_quantity An array of product quantities
      * @return void
      */
-    public function addProductsToOrderDetail($id, ?array $products_code, ?array $products_name, ?array $products_price, ?array $products_quantity): void
+    public function addProductsToOrderDetail(mixed $id, ?array $products_code, ?array $products_name, ?array $products_price, ?array $products_quantity): void
     {
         if (is_null($products_code) || is_null($products_name) || is_null($products_price) || is_null($products_quantity)) {
             return;
@@ -103,13 +103,13 @@ class PivotService
     }
 
     /**
-     * Create Terms to Order Detail
-     * @param $id
-     * @param array|null $terms_price
-     * @param array|null $terms_name
+     * Create new Terms records within Order Detail
+     * @param mixed $id The ID of the Order to which the terms will be added
+     * @param array|null $terms_price An array of term prices
+     * @param array|null $terms_name An array of term names
      * @return void
      */
-    public function addTermsToOrderDetail($id, ?array $terms_price, ?array $terms_name): void
+    public function addTermsToOrderDetail(mixed $id, ?array $terms_price, ?array $terms_name): void
     {
         if ($terms_price == null || $terms_name == null) {
             return;

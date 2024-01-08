@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class CommentRepository implements ICommentRepository
 {
     /**
-     *  Create comment
+     * Create a new Comment record
      * @param array $data
      * @return Model|Collection
      * */
@@ -21,7 +21,7 @@ class CommentRepository implements ICommentRepository
     }
 
     /**
-     *  Detail comment
+     * Find a specific Comment record by ID with relationships
      * @param $id
      * @return Model|Collection
      * */
@@ -31,7 +31,7 @@ class CommentRepository implements ICommentRepository
     }
 
     /**
-     *  Add comment child
+     *  Create a new CommentChild record
      * @param array $data
      * @return Model|Collection
      * */

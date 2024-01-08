@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class AttributeRepository implements IAttributeRepository
 {
     /**
-     * Get list Attributes by user id and paginate
+     * Get all records of Attributes related to the authenticated user, with relationships and paginate
      * @return LengthAwarePaginator
      * */
     public function all(): LengthAwarePaginator
@@ -20,7 +20,7 @@ class AttributeRepository implements IAttributeRepository
     }
 
     /**
-     * Get create Attribute
+     * Create a new Attribute record
      * @param array $data
      * @return Model|Collection
      * */
@@ -30,7 +30,7 @@ class AttributeRepository implements IAttributeRepository
     }
 
     /**
-     * Get detail Attribute
+     * Find a specific Attribute record by ID with relationships
      * @param $id
      * @return Model|Collection
      */
@@ -40,7 +40,7 @@ class AttributeRepository implements IAttributeRepository
     }
 
     /**
-     * update Attribute
+     * Update a specific Attribute record by ID with the provided data
      * @param $id
      * @param array $data
      * @return bool
@@ -51,7 +51,7 @@ class AttributeRepository implements IAttributeRepository
     }
 
     /**
-     * delete Attribute
+     * Delete a specific Attribute record by ID
      * @param $id
      * @return bool|null
      */
@@ -61,7 +61,7 @@ class AttributeRepository implements IAttributeRepository
     }
 
     /**
-     * restore Attribute
+     * Restore a specific soft-deleted Attribute record by ID
      * @param $id
      * @return bool
      */
