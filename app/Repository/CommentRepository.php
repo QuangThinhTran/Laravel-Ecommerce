@@ -9,7 +9,7 @@ class CommentRepository implements ICommentRepository
 {
     public function create(array $data)
     {
-        // TODO: Implement create() method.
+        return Comment::create($data);
     }
 
     public function update($id, array $data)
@@ -19,7 +19,7 @@ class CommentRepository implements ICommentRepository
 
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        return Comment::findOrFail($id);
     }
 
     public function getCommentByAction($action, $data)

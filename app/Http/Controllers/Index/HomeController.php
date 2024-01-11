@@ -24,11 +24,13 @@ class HomeController extends Controller
     public function index()
     {
         try {
-            $posts = $this->postRepository->index();
+            $posts = $this->postRepository->all();
+            $users = $this->userRepository->all();
 
-            $users = $this->userRepository->index();
-
-            return view('index', compact('posts', 'users'));
+            return response()->json([
+                'result' => [$posts, $users],
+                'statusCode' => ResponseAlias::HTTP_OK
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'result' => false,

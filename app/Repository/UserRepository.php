@@ -4,13 +4,14 @@ namespace App\Repository;
 
 use App\Models\User;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class UserRepository implements IUserRepository
 {
-    public function index()
+    public function all(): LengthAwarePaginator
     {
-        return User::with('posts')->paginate(10);
+        return User::with('posts', 'followings')->paginate(10);
     }
 
     public function login(array $data): bool|array

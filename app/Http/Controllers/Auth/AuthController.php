@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Repository\Interface\IUserRepository;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -28,14 +29,8 @@ class AuthController extends Controller
         try {
             $input = $request->all();
 
-            $user = $this->userRepository->register($input);
-
-            if (is_null($user)) {
-                return response()->json([
-                    'message' => 'Register failed',
-                ], ResponseAlias::HTTP_OK);
-            }
-
+            $this->userRepository->register($input);
+            $user = $this->userRepository->login($input);
             $access_token = $user->createToken('Bearer')->plainTextToken;
 
             return response()->json([
@@ -77,6 +72,24 @@ class AuthController extends Controller
                 'result' => false,
                 'message' => $e->getMessage(),
             ], ResponseAlias::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function logout(): JsonResponse
+    {
+        try {
+            $user = auth()->user();
+            $user->currentAccessToken()->delete();
+            return response()->json([
+                'result' => true
+            ]);
+
+        } catch (AuthenticationException $e) {
+
+            return response()->json([
+                'result' => false,
+                'message' => $e->getMessage(),
+            ], ResponseAlias::HTTP_UNAUTHORIZED);
         }
     }
 }

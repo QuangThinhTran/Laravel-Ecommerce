@@ -4,7 +4,7 @@ namespace App\Repository\Interface;
 
 interface IUserRepository
 {
-    public function index();
+    public function all();
 
     public function register(array $data);
 

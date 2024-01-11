@@ -4,7 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @method static insert(array $array)
+ */
 class Images extends Model
 {
     use HasFactory;
@@ -14,7 +18,8 @@ class Images extends Model
         'path',
         'post_id'
     ];
-    public function posts()
+
+    public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class);
     }

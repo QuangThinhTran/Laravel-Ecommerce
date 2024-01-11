@@ -6,9 +6,9 @@ use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-trait Util
+class Util
 {
-    public function uploadAvatar(Request $request): string
+    public static function uploadAvatar(Request $request): string
     {
         $nameImage = Str::random(10);
         $fileName = "${ $nameImage }.jpg";
@@ -16,7 +16,7 @@ trait Util
         return $fileName;
     }
 
-    public function uploadImage(Request $request)
+    public static function uploadImage(Request $request): bool
     {
         if ($request->file()) {
             return false;
@@ -25,8 +25,9 @@ trait Util
         foreach ($images as $img) {
             Images::insert([
                 'path' => $img,
-                'post_id' => $request->post_id
+                'post_id' => $request['post_id']
             ]);
         }
+        return true;
     }
 }

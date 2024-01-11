@@ -5,22 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static create(array $data)
+ * @method static find($id)
  * @method static findOrFail($id)
  */
-class Comment extends Model
+class Report extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'comments';
+    protected $table = 'reports';
+
     protected $fillable = [
-        'title',
+        'content',
+        'post_id',
         'user_id',
-        'post_id'
     ];
+
+    protected $dateFormat = 'd-m-Y';
 
     public function user(): BelongsTo
     {

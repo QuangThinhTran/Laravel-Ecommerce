@@ -7,9 +7,14 @@ use App\Repository\Interface\IPostRepository;
 
 class PostRepository implements IPostRepository
 {
-    public function index()
+    public function all()
     {
-        return Post::with('user','comments.user')->paginate(10);
+        return Post::with('user', 'images', 'comments.user', 'countComments')->paginate(10);
+    }
+
+    public function getPostsByUser()
+    {
+        return Post::with('user', 'images', 'reports', 'comments.user', 'countComments')->where('user_id', auth()->id())->paginate(10);
     }
 
     public function create(array $data)
@@ -17,23 +22,23 @@ class PostRepository implements IPostRepository
         return Post::create($data);
     }
 
-    public function detail($id)
+    public function find($id)
     {
-        return Post::find($id);
+        return Post::with('user', 'reports', 'comments.user', 'images')->findOrFail($id);
     }
 
     public function update($id, array $data)
     {
-        return Post::findorFail($id)->update($data);
+        return Post::findOrFail($id)->update($data);
     }
 
     public function delete($id)
     {
-        return Post::findorFail($id)->delete();
+        return Post::findOrFail($id)->delete();
     }
 
     public function restore($id)
     {
-        return Post::findorFail($id)->withTrashed()->restore();
+        return Post::findOrFail($id)->withTrashed()->restore();
     }
 }

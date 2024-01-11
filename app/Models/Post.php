@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -22,30 +25,36 @@ class Post extends Model
         'user_id',
     ];
 
-    protected $dateFormat = [
-        'created_at' => 'd-m-Y',
-        'updated_at' => 'd-m-Y',
-        'deleted_at' => 'd-m-Y'
-    ];
+    protected $dateFormat = 'd-m-Y';
 
-    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function images(): HasMany
     {
         return $this->hasMany(Images::class, 'post_id');
     }
 
-    public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function comments(): LengthAwarePaginator
     {
-        return $this->hasMany(Comment::class, 'user_id');
+        return $this->hasMany(Comment::class, 'user_id')->paginate(3);
     }
 
-    public function likes(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function countComments(): int
     {
-        return $this->belongsToMany(Post::class, 'likes', 'post_id', 'user_id');
+        return $this->hasMany(Comment::class, 'user_id')->count();
+    }
+
+    public function likes(): int
+    {
+        return $this->belongsToMany(Post::class, 'likes', 'post_id', 'user_id')->count();
+    }
+
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class, 'post_id');
     }
 
     protected static function boot(): void
@@ -53,6 +62,9 @@ class Post extends Model
         parent::boot();
         static::deleting(function ($posts) {
             $posts->images()->delete();
+            $posts->comments()->delete();
+            $posts->likes()->delete();
+            $posts->reports()->delete();
         });
 
         static::restoring(function ($posts) {

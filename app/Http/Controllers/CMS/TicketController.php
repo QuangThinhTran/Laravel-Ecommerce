@@ -3,29 +3,30 @@
 namespace App\Http\Controllers\CMS;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CommentRequest;
-use App\Repository\Interface\ICommentRepository;
+use App\Http\Requests\ReportRequest;
+use App\Repository\Interface\ITicketRepository;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class CommentController extends Controller
+class TicketController extends Controller
 {
-    protected ICommentRepository $commentRepository;
+    protected ITicketRepository $reportRepository;
 
     public function __construct
     (
-        ICommentRepository $commentRepository
+        ITicketRepository $reportRepository
     ) {
-        $this->commentRepository = $commentRepository;
+        $this->reportRepository = $reportRepository;
     }
 
-    public function create(CommentRequest $request): JsonResponse
+    public function create(ReportRequest $request): JsonResponse
     {
         try {
             $input = $request->all();
 
-            $this->commentRepository->create($input);
+            $this->reportRepository->create($input);
+
             return response()->json([
                 'result' => true,
                 'message' => 'Create Successful',
@@ -39,12 +40,13 @@ class CommentController extends Controller
         }
     }
 
-    public function update($id, CommentRequest $request): JsonResponse
+    public function update($id, ReportRequest $request): JsonResponse
     {
         try {
             $input = $request->all();
 
-            $this->commentRepository->update($id, $input);
+            $this->reportRepository->update($id, $input);
+
             return response()->json([
                 'result' => true,
                 'message' => 'Update Successful',
@@ -61,7 +63,8 @@ class CommentController extends Controller
     public function delete($id): JsonResponse
     {
         try {
-            $this->commentRepository->delete($id);
+            $this->reportRepository->delete($id);
+
             return response()->json([
                 'result' => true,
                 'message' => 'Delete Successful',
